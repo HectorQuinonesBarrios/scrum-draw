@@ -11,7 +11,7 @@ html
   body
     div(class='container')
       // Fixed navbar
-      nav.navbar.navbar-default.navbar-fixed-top
+      nav.navbar.navbar-inverse.navbar-fixed-top
         .container
           .navbar-header
             button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
@@ -25,7 +25,7 @@ html
               li.active
                 a(href='#') Home
               li
-                a(href='#about') Proyectos
+                a(href='/projects') Proyectos
               li
                 a(href='#contact') Tablero
               li.dropdown
@@ -45,6 +45,9 @@ html
                     a(href='#') Separated link
                   li
                     a(href='#') One more separated link
+            ul.nav.navbar-nav.navbar-right
+              a.btn.btn-success.navbar-btn(href='/login') Iniciar sesión
+              a.btn.btn-danger.navbar-btn(href='/users') Regístrate
 
     block content
 
