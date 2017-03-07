@@ -3,10 +3,10 @@ html
   head
     title= ScrumMaster
     //Bustra
-    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap-theme.min.css')
-
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block head
+      link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap-theme.min.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
     div(class='container')
@@ -47,5 +47,9 @@ html
                     a(href='#') One more separated link
 
     block content
-    script(src="https://code.jquery.com/jquery-2.2.4.js", integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=", crossorigin="anonymous")
-    script(src='/bootstrap/dist/js/bootstrap.min.js' type='text/javascript')
+
+
+
+    block script
+      script(src='/jquery/dist/jquery.min.js')
+      script(src='/bootstrap/dist/js/bootstrap.min.js' type='text/javascript')

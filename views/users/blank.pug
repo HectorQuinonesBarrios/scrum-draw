@@ -1,0 +1,58 @@
+extends ../layout
+
+block content
+
+  .container
+    h1.well Nuevo usuario
+    .col-lg-12.well
+      .row
+        form
+          .col-sm-12
+            .row
+              .col-sm-6.form-group
+                label Nombre
+                |
+                input.form-control(type='text', placeholder='Nombre..')
+              .col-sm-6.form-group
+                label Apellidos
+                |
+                input.form-control(type='text', placeholder='Apellidos..')
+            .form-group
+              label Address
+              textarea.form-control(placeholder='Direccion..', rows='3')
+            .row
+              .col-sm-4.form-group
+                label Ciudad
+                |
+                input.form-control(type='text', placeholder='Ciudad..')
+              .col-sm-4.form-group
+                label Estado
+                |
+                input.form-control(type='text', placeholder='Estado..')
+              .col-sm-4.form-group
+                label Codigo postal
+                |
+                input.form-control(type='text', placeholder='Codigo postal..')
+            .row
+              .col-sm-6.form-group
+                label Titulo
+                |
+                input.form-control(type='text', placeholder='Escriba su titulo..')
+              .col-sm-6.form-group
+                label Compania
+                |
+                input.form-control(type='text', placeholder='Escriba el nombre de su Compania..')
+            .form-group
+              label Numero de telefono
+              |
+              input.form-control(type='text', placeholder='Escriba su numero de telefono..')
+            .form-group
+              label Email
+              |
+              input.form-control(type='text', placeholder='Escriba el Email..')
+            .form-group
+              label Contrasena
+              |
+              input.form-control(type='password', placeholder='Escriba la contrasena..')
+            |
+            button.btn.btn-lg.btn-info(type='button') Submit
