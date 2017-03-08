@@ -1,0 +1,26 @@
+{
+  "name": "scrum-draw",
+  "description": "Proyecto de scrum para Desarrollo Rapido de Aplicaciones Web",
+  "main": "/bin/www",
+  "authors": [
+    "El Hector <a291528@uach.mx>",
+    "El Jonas <a288287@uach.mx"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Proyecto",
+    "Scrum",
+    "DRAW"
+  ],
+  "homepage": "https://github.com/HectorQuinonesBarrios/scrum-draw",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
