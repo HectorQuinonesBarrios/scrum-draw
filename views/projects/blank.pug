@@ -18,9 +18,23 @@ block content
                 textarea.form-control(placeholder='Descripción..', rows='3')
             .row
               .col-sm-6.form-group
-                label Fecha de inicio
+                label Fecha de solicitud
                 input.form-control(type='date')
               .col-sm-6.form-group
-                label Fecha de término
-                textarea.form-control(type='date')
+                label Fecha de arranque
+                input.form-control(type='date')
+            .row
+              .col-sm-6.form-group
+                label Administrador del Proyecto (Scrum Master)
+                |
+                input.form-control(type='text', placeholder='Usuario..')
+              .col-sm-6.form-group
+                label Dueño del producto (Product Owner)
+                |
+                input.form-control(type='text', placeholder='Usuario..')
+            .row
+              .col-sm-6.form-group
+                label Equipo de Desarrollo
+                |
+                input.form-control(type='text', placeholder='Usuario(s)..')
             button.btn.btn-lg.btn-info(type='button') Submit
