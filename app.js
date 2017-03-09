@@ -5,12 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var login_form = require('./routes/login_form');
-var kanban = require('./routes/kanban');
-var projects = require('./routes/projects');
-var new_project = require('./routes/new_project');
+var index = require('./routes/index')
+, users = require('./routes/users')
+, login_form = require('./routes/login_form')
+, kanban = require('./routes/kanban')
+, projects = require('./routes/projects')
+, new_project = require('./routes/new_project')
+, statistics = require('./routes/statistics');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/login', login_form);
 app.use('/kanban', kanban);
 app.use('/projects', projects);
 app.use('/new_project', new_project);
+app.use('/statistics', statistics);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
