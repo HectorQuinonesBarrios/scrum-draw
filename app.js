@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var login_form = require('./routes/login_form');
 var kanban = require('./routes/kanban');
 var projects = require('./routes/projects');
+var new_project = require('./routes/new_project');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/users', users);
 app.use('/login', login_form);
 app.use('/kanban', kanban);
 app.use('/projects', projects);
+app.use('/new_project', new_project);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

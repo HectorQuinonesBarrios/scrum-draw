@@ -1,0 +1,26 @@
+extends ../layout
+block append head
+block content
+  .container
+    h1.well Nuevo proyecto
+    .col-lg-12.well
+      .row
+        form
+          .col-sm-12
+            .row
+              .col-sm-6.form-group
+                label Nombre del proyecto
+                |
+                input.form-control(type='text', placeholder='Nombre..')
+              .col-sm-6.form-group
+                label Descripción
+                |
+                textarea.form-control(placeholder='Descripción..', rows='3')
+            .row
+              .col-sm-6.form-group
+                label Fecha de inicio
+                input.form-control(type='date')
+              .col-sm-6.form-group
+                label Fecha de término
+                textarea.form-control(type='date')
+            button.btn.btn-lg.btn-info(type='button') Submit
