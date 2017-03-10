@@ -1,0 +1,40 @@
+extends ../layout
+block append head
+block content
+  .container
+    h1.well Nuevo proyecto
+    .col-lg-12.well
+      .row
+        form
+          .col-sm-12
+            .row
+              .col-sm-6.form-group
+                label Nombre del proyecto
+                |
+                input.form-control(type='text', placeholder='Nombre..')
+              .col-sm-6.form-group
+                label Descripción
+                |
+                textarea.form-control(placeholder='Descripción..', rows='3')
+            .row
+              .col-sm-6.form-group
+                label Fecha de solicitud
+                input.form-control(type='date')
+              .col-sm-6.form-group
+                label Fecha de arranque
+                input.form-control(type='date')
+            .row
+              .col-sm-6.form-group
+                label Administrador del Proyecto (Scrum Master)
+                |
+                input.form-control(type='text', placeholder='Usuario..')
+              .col-sm-6.form-group
+                label Dueño del producto (Product Owner)
+                |
+                input.form-control(type='text', placeholder='Usuario..')
+            .row
+              .col-sm-6.form-group
+                label Equipo de Desarrollo
+                |
+                input.form-control(type='text', placeholder='Usuario(s)..')
+            button.btn.btn-lg.btn-info(type='button') Submit

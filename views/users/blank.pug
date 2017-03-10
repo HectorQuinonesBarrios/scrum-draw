@@ -18,41 +18,29 @@ block content
                 |
                 input.form-control(type='text', placeholder='Apellidos..')
             .form-group
-              label Address
+              label Dirección
               textarea.form-control(placeholder='Direccion..', rows='3')
             .row
-              .col-sm-4.form-group
-                label Ciudad
+              .col-sm-6.form-group
+                label CURP
                 |
-                input.form-control(type='text', placeholder='Ciudad..')
-              .col-sm-4.form-group
-                label Estado
+                input.form-control(type='text', placeholder='CURP..')
+              .col-sm-6.form-group
+                label RFC
                 |
-                input.form-control(type='text', placeholder='Estado..')
-              .col-sm-4.form-group
-                label Codigo postal
+                input.form-control(type='text', placeholder='RFC..')
+            .row
+              .col-sm-12.form-group
+                label Habilidades
                 |
-                input.form-control(type='text', placeholder='Codigo postal..')
+                textarea.form-control(rows='3', placeholder='Escriba tus habilidades..')
             .row
               .col-sm-6.form-group
-                label Titulo
+                label Email
                 |
-                input.form-control(type='text', placeholder='Escriba su titulo..')
+                input.form-control(type='email', placeholder='Escriba el Email..')
               .col-sm-6.form-group
-                label Compania
+                label Contraseña
                 |
-                input.form-control(type='text', placeholder='Escriba el nombre de su Compania..')
-            .form-group
-              label Numero de telefono
-              |
-              input.form-control(type='text', placeholder='Escriba su numero de telefono..')
-            .form-group
-              label Email
-              |
-              input.form-control(type='text', placeholder='Escriba el Email..')
-            .form-group
-              label Contrasena
-              |
-              input.form-control(type='password', placeholder='Escriba la contrasena..')
-            |
-            button.btn.btn-lg.btn-info(type='button') Submit
+                input.form-control(type='password', placeholder='Escriba la contraseña..')
+            button.btn.btn-lg.btn-info(type='button') Regístrame
