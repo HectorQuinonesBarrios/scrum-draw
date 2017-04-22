@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
+const loginController = require('../controllers/login_form');
 /* GET Login/Register page. */
-router.get('/', function(req, res, next) {
-  res.render('login/login_form', { title: 'Express' });
-});
+router.get('/', loginController.login_form);
 
 module.exports = router;

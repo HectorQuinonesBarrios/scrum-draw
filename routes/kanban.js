@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const kanbanController = require('../controllers/kanban');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('kanban/kanban.pug', { title: 'Express' });
-});
+router.get('/',kanbanController.kanban);
 
 module.exports = router;
-  

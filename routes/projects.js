@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const projectsController = require('../controllers/projects');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('projects/list.pug', { title: 'Express' });
-});
+router.get('/', projectsController.list);
 
 module.exports = router;
