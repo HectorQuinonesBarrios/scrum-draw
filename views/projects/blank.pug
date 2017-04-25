@@ -5,36 +5,36 @@ block content
     h1.well Nuevo proyecto
     .col-lg-12.well
       .row
-        form
+        form(name='new_project', id='new_project', method='POST', action='/new_project/')
           .col-sm-12
             .row
               .col-sm-6.form-group
                 label Nombre del proyecto
                 |
-                input.form-control(type='text', placeholder='Nombre..')
+                input.form-control(type='text', placeholder='Nombre..', name='nombre')
               .col-sm-6.form-group
                 label Descripción
                 |
-                textarea.form-control(placeholder='Descripción..', rows='3')
+                textarea.form-control(placeholder='Descripción..', rows='3', name='descripcion')
             .row
               .col-sm-6.form-group
                 label Fecha de solicitud
-                input.form-control(type='date')
+                input.form-control(type='date', name='fecha_solicitud')
               .col-sm-6.form-group
                 label Fecha de arranque
-                input.form-control(type='date')
+                input.form-control(type='date', name='fecha_arranque')
             .row
               .col-sm-6.form-group
                 label Administrador del Proyecto (Scrum Master)
                 |
-                input.form-control(type='text', placeholder='Usuario..')
+                input.form-control(type='text', placeholder='Usuario..', name='scrum_master')
               .col-sm-6.form-group
                 label Dueño del producto (Product Owner)
                 |
-                input.form-control(type='text', placeholder='Usuario..')
+                input.form-control(type='text', placeholder='Usuario..', name='product_owner')
             .row
               .col-sm-6.form-group
                 label Equipo de Desarrollo
                 |
-                input.form-control(type='text', placeholder='Usuario(s)..')
-            button.btn.btn-lg.btn-info(type='button') Submit
+                input.form-control(type='text', placeholder='Usuario(s)..', name='equipo_desarrollo')
+            button.btn.btn-lg.btn-info(type='submit') Crear
