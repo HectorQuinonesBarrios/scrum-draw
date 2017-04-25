@@ -11,7 +11,8 @@ var index = require('./routes/index')
 , kanban = require('./routes/kanban')
 , projects = require('./routes/projects')
 , new_project = require('./routes/new_project')
-, statistics = require('./routes/statistics');
+, statistics = require('./routes/statistics')
+, tarjetas = require('./routes/tarjetas');
 
 var app = express();
 

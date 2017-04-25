@@ -1,47 +1,75 @@
 'use strict'
 const express = require('express');
-
+const Backlog = require('../models/backlog');
+const log4js = require('log4js');
+const logger = log4js.getLogger();
 function kanban(req, res, next) {
  res.render('kanban/kanban.pug', { title: 'Express' });
-}
-function  crearTarjeta(req, res, next){
-  let tarjeta = new TarjetaSchema ({
-    valor: req.body.valor,
-  	narrativa: req.body.narrativa,
-  	criterios: req.body.criterios,
-  	validada: req.body.validada,
-  	terminado: req.body.terminado,
-  	asignados: [{usuario_id: req.body.asignados}]
-  });
-
-tarjeta.save((err,object)=>{
-  if(err){
-    //TODO
-  }
-  else{
-    //TODO
-    next();
-  }
-
-});
-
 }
 
 function crearBacklog(req, res, next){
   let backlog = new BacklogSchema ({
     tipo: req.body.tipo,
   	proyecto_id: req.body.proyecto_id,
-  	tarjetas: [req.body.tarjetas]
+  	Backlogs: [req.body.Backlogs]
   });
-  backlog.save((err,object)=>{
+  Backlog.save((err,object)=>{
     if(err){
       //TODO
+
+      throw err;
     }else {
       //TODO
+      next();
+    }
+  });
+}
+
+function verBacklog(req, res, next){
+  logger.debug('Ver Backlog');
+  Backlog.findOne({_id:req.params.id}, (err, backlog)=>{
+    if(err){
+      res.status(404);
+    }else {
+      res.status(200).json(backlog);
+      next();
+    }
+  });
+}
+
+function actualizarBacklog(req,res,next){
+  logger.debug('Actualizar Backlog');
+  let backlog = {
+    valor: req.body.valor,
+  	narrativa: req.body.narrativa,
+  	criterios: req.body.criterios,
+  	validada: req.body.validada,
+  	terminado: req.body.terminado,
+  	asignados: [{usuario_id: req.body.asignados}]
+  };
+  Backlog.update({_id:req.params.id},($set:backlog),(err,backlog)=>{
+    if(err){
+      throw err;
+    }else {
+      next();
+    }
+  });
+
+}
+function borrarBacklog(req,res,next){
+  logger.debug('Borrar Backlog');
+  Backlog.remove({_id:req.params.id},(err,backlog)=>{
+    if(err){
+      throw err;
+    }else {
+      next();
     }
   });
 }
 module.exports = {
   kanban,
-  crearTarjeta
+  crearBacklog,
+  verBacklog,
+  actualizarBacklog,
+  borrarBacklog
 }
