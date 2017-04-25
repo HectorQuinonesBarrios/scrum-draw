@@ -7,6 +7,11 @@
 var app = require('../app');
 var debug = require('debug')('scrum-draw:server');
 var http = require('http');
+var mongoose = require('mongoose');
+var log4js = require('log4js');
+
+
+var logger = log4js.getLogger();
 
 /**
  * Get port from environment and store in Express.
@@ -24,8 +29,17 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+mongoose.connect('mongodb://localhost:27017/scrum_draw', (err, res)=>{
+  if(err){
+    logger.error("No se pudo extablecer una conexion con el servicio de mongoDB.");
+    throw err;
+  }else{
+    server.listen(port, ()=>{
+      logger.info("Conexión exitosa a la base de datos.");
+    });
+  }
+});
 
-server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
