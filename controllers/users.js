@@ -3,40 +3,67 @@ const express = require('express');
 const Usuario = require('../models/usuario')
 const log4js = require('log4js');
 const logger = log4js.getLogger();
+const bcrypt = require('bcrypt-nodejs');
 
 function blank(req, res, next) {
-  res.render('users/blank');
+	let usuario = {
+		nombre: '',
+		password: '',
+		email: '',
+		fecha_nacimiento: '',
+		curp: '',
+		rfc: '',
+		domicilio: '',
+		habilidades: ''
+	}
+  res.render('users/blank', {usuario});
 }
-function crearUsuario(req, res, next){
-  logger.debug("Crear");
-  let usuario = new UsuarioSchema ({
-    nombre: req.body.nombre,
-  	fecha_nacimiento: req.body.fecha_nacimiento,
-  	curp: req.body.curp,
-  	rfc: req.body.rfc,
-  	domicilio: req.body.domicilio,
-  	habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
-  });
-  Usuario.save((err,object)=>{
-    let code = '';
-    let message = '';
-    if(err){
-      code = 'danger';
-      message = 'Error al crear el usuario';
-    }else{
-      code = 'success';
-      message = 'Usuario creado correctamente';
-    }
-    res.locals.status = {
-      code:code,
-      message:message
-    };
-    next();
-  });
+function crear(req, res, next){
+  logger.debug("Crear Usuario");
+	if (req.body.password) {
+		bcrypt.hash(req.body.password, null, null, (err, hash) => {
+			let code = '',
+					message = '';
+			if (err) {
+				code = 'danger';
+				message = 'No se ha podido guardar el usuario.';
+				res.locals.status = {
+					code,
+					message
+				};
+				next();
+			} else {
+				let usuario = new Usuario({
+					nombre: req.body.nombre,
+					password: hash,
+					email: req.body.email,
+					fecha_nacimiento: req.body.fecha_nacimiento,
+					curp: req.body.curp,
+					rfc: req.body.rfc,
+					domicilio: req.body.domicilio,
+					habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
+				});
+				usuario.save((err, object)=>{
+					if(err){
+						code = 'danger';
+						message = 'Error al crear el usuario';
+					}else{
+						code = 'success';
+						message = 'Usuario creado correctamente';
+					}
+					res.locals.status = {
+						code,
+						message
+					};
+					next();
+				});
+			}
+		});
+	}
 }
 
 
-function verUsuario(req, res, next){
+function ver(req, res, next){
   logger.debug("Ver Usuario");
   logger.info(req.params.id);
   Usuario.findOne({_id:req.params.id}, (err, usuario)=>{
@@ -52,8 +79,13 @@ function verUsuario(req, res, next){
   });
 }
 
+function editar(req, res, next) {
+	Usuario.findOne({_id: req.params.id},(err, usuario)=>{
+    res.render('users/edit', {usuario});
+	});
+}
 
-function actualizarUsuario(req, res, next){
+function actualizar(req, res, next) {
   logger.debug("Actualizar Usuario");
   let usuario = {
     nombre: req.body.nombre,
@@ -63,13 +95,13 @@ function actualizarUsuario(req, res, next){
   	domicilio: req.body.domicilio,
   	habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
   };
-  Usuario.update({_id:req.params.id},{$set:usuario}, (err,usuario) =>{
+  Usuario.update({_id:req.params.id},{$set: usuario}, (err,usuario) =>{
     next();
   });
 
 }
 
-function borrarUsuario(req, res, next){
+function borrar(req, res, next){
   logger.debug("Borrar Usuario");
   Usuario.remove({_id:req.params.id},(err, usuario)=>{
     next();
@@ -78,8 +110,9 @@ function borrarUsuario(req, res, next){
 
 module.exports = {
   blank,
-  crearUsuario,
-  verUsuario,
-  actualizarUsuario,
-  borrarUsuario
+  crear,
+  ver,
+  actualizar,
+  borrar,
+	editar
 }

@@ -3,8 +3,8 @@ extends ../layout
 block content
 
   .container
-    h1.well Nuevo usuario
+    h1.well Editar usuario
     .col-lg-12.well
       .row
-        form(action='/users/', method='POST')
+        form(action=`/users/${usuario._id}?_method=PUT`, method='PUT')
         include user-form.pug
