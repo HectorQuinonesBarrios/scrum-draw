@@ -50,7 +50,7 @@ function actualizarTarjeta(req,res,next){
   	terminado: req.body.terminado,
   	asignados: [{usuario_id: req.body.asignados}]
   };
-  Tarjeta.update({_id:req.params.id},($set:tarjeta),(err,tarjeta)=>{
+  Tarjeta.update({_id:req.params.id},{$set:tarjeta},(err,tarjeta)=>{
     if(err){
       throw err;
     }else {
