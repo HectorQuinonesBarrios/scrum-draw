@@ -30,7 +30,7 @@ Tarjeta.save((err,object)=>{
 
 function verTarjeta(req, res, next){
   logger.debug('Ver Tarjeta');
-  Tarjeta.findOne({_id:req.params.id}, (err, tarjeta)=>{
+  Tarjeta.findOne({_id: req.params.id}, (err, tarjeta)=>{
     if(err){
       res.status(404);
     }else {
@@ -40,7 +40,7 @@ function verTarjeta(req, res, next){
   });
 }
 
-function actualizarTarjeta(req,res,next){
+function actualizarTarjeta(req, res, next){
   logger.debug('Actualizar Tarjeta');
   let tarjeta = {
     valor: req.body.valor,
@@ -50,7 +50,7 @@ function actualizarTarjeta(req,res,next){
   	terminado: req.body.terminado,
   	asignados: [{usuario_id: req.body.asignados}]
   };
-  Tarjeta.update({_id:req.params.id},($set:tarjeta),(err,tarjeta)=>{
+  Tarjeta.update({_id:req.params.id}, {$set: tarjeta}, (err,tarjeta)=>{
     if(err){
       throw err;
     }else {
@@ -61,7 +61,7 @@ function actualizarTarjeta(req,res,next){
 }
 function borrarTarjeta(req,res,next){
   logger.debug('Borrar Tarjeta');
-  Tarjeta.remove({_id:req.body.id},(err,tarjeta)=>{
+  Tarjeta.remove({_id: req.body.id}, (err, tarjeta)=>{
     if(err){
       throw err;
     }else {
