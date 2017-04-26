@@ -7,17 +7,17 @@ block content
       .col-xs-12.col-sm-offset-2.col-sm-8(class='[ ]')
         a.btn.btn-success.btn-large.glyphicon.glyphicon-plus(href="/new_project")
         ul.event-list
-          each val in [1,2,3]
+          each proyecto in proyectos
             li
               time(datetime='2014-07-20')
-                span.day= val
+                span.day= proyecto.fecha_solicitud
                 |
-                span.month Jul
+                span.month= proyecto.fecha_arranque
                 |
-                span.year 2014
+                span.year= proyecto.product_owner
                 |
-                span.time ALL DAY
+                span.time= proyecto.scrum_master
               .info
-                h2.title Independence Day
-                p.desc United States Holiday
+                h2.title= proyecto.nombre
+                p.desc= proyecto.descripcion
                 a(href="/statistics") Ver estadísticas

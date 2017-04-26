@@ -1,8 +1,15 @@
 'use strict'
 const express = require('express');
+const Proyecto = require('../models/proyecto');
 
 function list (req, res, next) {
-  res.render('projects/list.pug', { title: 'Express' });
+	Proyecto.find({}, (err, proyectos) => {
+		if (err) {
+			throw err;
+		} else
+			res.render('projects/list.pug', {proyectos});
+			next();
+	});
 }
 
 module.exports = {
