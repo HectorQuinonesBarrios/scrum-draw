@@ -48,6 +48,7 @@ function actualizarBacklog(req,res,next){
   	asignados: [{usuario_id: req.body.asignados}]
   };
   Backlog.update({_id:req.params.id},{$set:backlog},(err,backlog)=>{
+
     if(err){
       throw err;
     }else {
