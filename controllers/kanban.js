@@ -3,11 +3,12 @@ const express = require('express');
 const Backlog = require('../models/backlog');
 const log4js = require('log4js');
 const logger = log4js.getLogger();
+
 function kanban(req, res, next) {
  res.render('kanban/kanban.pug', { title: 'Express' });
 }
 
-function crearBacklog(req, res, next){
+function crear(req, res, next){
   let backlog = new BacklogSchema ({
     tipo: req.body.tipo,
   	proyecto_id: req.body.proyecto_id,
@@ -25,7 +26,7 @@ function crearBacklog(req, res, next){
   });
 }
 
-function verBacklog(req, res, next){
+function ver(req, res, next){
   logger.debug('Ver Backlog');
   Backlog.findOne({_id:req.params.id}, (err, backlog)=>{
     if(err){
@@ -37,7 +38,7 @@ function verBacklog(req, res, next){
   });
 }
 
-function actualizarBacklog(req,res,next){
+function actualizar(req,res,next){
   logger.debug('Actualizar Backlog');
   let backlog = {
     valor: req.body.valor,
@@ -56,7 +57,7 @@ function actualizarBacklog(req,res,next){
   });
 
 }
-function borrarBacklog(req,res,next){
+function borrar(req,res,next){
   logger.debug('Borrar Backlog');
   Backlog.remove({_id:req.params.id},(err,backlog)=>{
     if(err){
@@ -68,8 +69,8 @@ function borrarBacklog(req,res,next){
 }
 module.exports = {
   kanban,
-  crearBacklog,
-  verBacklog,
-  actualizarBacklog,
-  borrarBacklog
+  crear,
+  ver,
+  actualizar,
+  borrar
 }
