@@ -33,4 +33,4 @@ function login(req, res, next) {
 module.exports = exports = {
   login,
   login_form
-}
+};

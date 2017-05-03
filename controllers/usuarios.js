@@ -6,17 +6,21 @@ const logger = log4js.getLogger();
 const bcrypt = require('bcrypt-nodejs');
 
 function blank(req, res, next) {
-	let usuario = {
-		nombre: '',
-		password: '',
-		email: '',
-		fecha_nacimiento: '',
-		curp: '',
-		rfc: '',
-		domicilio: '',
-		habilidades: ''
-	}
-  res.render('users/blank', {usuario});
+  let usr = {
+      nombre: '',
+      password: '',
+      email: '',
+      fecha_nacimiento: '',
+      curp: '',
+      rfc: '',
+      domicilio: '',
+      habilidades: ''
+  }
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    if (err) throw err;
+    else if (!usuario) res.render('users/blank', { usuario: usr });
+    else res.render('index', { usuario });
+  });
 }
 function crear(req, res, next){
   logger.debug("Crear Usuario");
@@ -80,9 +84,9 @@ function ver(req, res, next){
 }
 
 function editar(req, res, next) {
-	Usuario.findOne({_id: req.params.id},(err, usuario)=>{
-    res.render('users/edit', {usuario});
-	});
+  Usuario.findOne({_id: req.params.id}, (err, usuario)=>{
+    res.render('users/edit', { usuario });
+  });
 }
 
 function actualizar(req, res, next) {
@@ -95,15 +99,14 @@ function actualizar(req, res, next) {
   	domicilio: req.body.domicilio,
   	habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
   };
-  Usuario.update({_id:req.params.id},{$set: usuario}, (err,usuario) =>{
+  Usuario.update({_id: req.params.id},{$set: usuario}, (err, usuario) =>{
     next();
   });
-
 }
 
 function borrar(req, res, next){
   logger.debug("Borrar Usuario");
-  Usuario.remove({_id:req.params.id},(err, usuario)=>{
+  Usuario.remove({_id: req.params.id}, (err, usuario)=>{
     next();
   });
 }

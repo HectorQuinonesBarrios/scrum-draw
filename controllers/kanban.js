@@ -1,11 +1,15 @@
 'use strict'
-const express = require('express');
-const Backlog = require('../models/backlog');
-const log4js = require('log4js');
-const logger = log4js.getLogger();
+const express = require('express'),
+      Backlog = require('../models/backlog'),
+      Usuario = require('../models/usuario'),
+      log4js = require('log4js'),
+      logger = log4js.getLogger();
 
 function kanban(req, res, next) {
- res.render('kanban/kanban.pug', { title: 'Express' });
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    usuario = usuario || {};
+    res.render('kanban/kanban.pug', { usuario });
+  });
 }
 
 function crear(req, res, next){
