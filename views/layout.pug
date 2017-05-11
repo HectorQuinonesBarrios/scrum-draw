@@ -37,17 +37,26 @@ html
                     a(href='#') Action
                   li
                     a(href='#') Another action
-                  li
-                    a(href='#') Something else here
                   li.divider
                   li.dropdown-header Nav header
                   li
                     a(href='#') Separated link
-                  li
-                    a(href='#') One more separated link
             ul.nav.navbar-nav.navbar-right
-              a.btn.btn-success.navbar-btn(href='/login') Iniciar sesión
-              a.btn.btn-danger.navbar-btn(href='/users') Regístrate
+              if !usuario || !usuario._id
+                a.btn.btn-success.navbar-btn(href='/login') Iniciar sesión
+                a.btn.btn-danger.navbar-btn(href='/users') Regístrate
+              else
+                li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                    | #{usuario.nombre}
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      form(action='/logout', method='POST')
+                        button(type='submit', class='btn btn-link') Logout
+                    li.divider(role='separator')
+                    li
+                      a(href='#') Separated link
 
     block content
 

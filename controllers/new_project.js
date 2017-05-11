@@ -1,11 +1,15 @@
 'use strict'
-const express = require('express');
-const Proyecto = require('../models/proyecto');
-const log4js = require('log4js');
-const logger = log4js.getLogger();
+const express = require('express'),
+      Proyecto = require('../models/proyecto'),
+      Usuario = require('../models/usuario'),
+      log4js = require('log4js'),
+      logger = log4js.getLogger();
 
 function blank(req, res, next) {
-  res.render('projects/blank.pug', { title: 'Express' });
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    usuario = usuario || {};
+    res.render('projects/blank.pug', { usuario });
+  });
 }
 
 function crear(req, res, next) {
