@@ -1,6 +1,7 @@
 extends ../layout
 block append head
   link(rel='stylesheet', href='/stylesheets/login_form.css')
+  link(rel='stylesheet', href='/bootstrap-social/bootstrap-social.css')
 block content
     .wrapper
       form.form-signin(action='/login' method='POST')
@@ -15,5 +16,12 @@ block content
           |  Remember me
         |
         button.btn.btn-lg.btn-primary.btn-block(type='submit') Login
+        a.btn.btn-block.btn-social.btn-facebook(href="/login/auth/facebook")
+          span.fa.fa-facebook Inicio con facebook
+        a.btn.btn-block.btn-social.btn-twitter(href="#/login/auth/twitter")
+          span.fa.fa-facebook Inicio con facebook
+        a.btn.btn-block.btn-social.btn-github(href="#/login/auth/github")
+          span.fa.fa-facebook Inicio con facebook
+
 block append script
   script(src='/javascripts/login_form.js' type='text/javascript')

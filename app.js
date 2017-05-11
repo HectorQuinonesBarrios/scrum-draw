@@ -5,6 +5,7 @@ const express = require('express'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
       session = require('express-session'),
+      passport = require('passport'),
       Usuario = require('./models/usuario');
 
 const index = require('./routes/index')
@@ -18,7 +19,7 @@ const index = require('./routes/index')
 , tarjetas = require('./routes/tarjetas');
 
 const app = express();
-
+const auth = require('./routes/login');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -34,6 +35,11 @@ app.use(session({
   resave: false,
   saveUnitialized: true
 }));
+app.use('/auth', auth);
+require('./auth')(passport);
+app.use(passport.initialize());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
