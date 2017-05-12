@@ -14,6 +14,7 @@ module.exports = () => {
             callbackURL: "http://localhost:3000/login/auth/facebook/callback"
         },
         function(accessToken, refreshToken, profile, cb) {
+            logger.debug(profile);
             Usuario.create({
                 facebookId: profile.id
             }, function(err, user) {
