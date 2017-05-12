@@ -2,6 +2,7 @@ extends ../layout
 block append head
   link(rel='stylesheet', href='/stylesheets/login_form.css')
   link(rel='stylesheet', href='/bootstrap-social/bootstrap-social.css')
+  link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
 block content
     .wrapper
       form.form-signin(action='/login' method='POST')
@@ -15,6 +16,7 @@ block content
           input#rememberMe(type='checkbox', value='remember-me', name='rememberMe')
           |  Remember me
         |
+<<<<<<< HEAD
         button.btn.btn-lg.btn-primary.btn-block(type='submit') Login
         a.btn.btn-block.btn-social.btn-facebook(href="/login/auth/facebook")
           span.fa.fa-facebook Inicio con facebook
@@ -22,6 +24,18 @@ block content
           span.fa.fa-facebook Inicio con facebook
         a.btn.btn-block.btn-social.btn-github(href="/login/auth/github")
           span.fa.fa-facebook Inicio con facebook
+=======
+        button(class='btn btn-lg btn-primary btn-block' type='submit') Login
+        a(class='btn btn-block btn-social btn-facebook' href="/login/auth/facebook")
+          span(class='fa fa-facebook')
+          | Inicio con facebook
+        a(class='btn btn-block btn-social btn-twitter' href="#/login/auth/twitter")
+          span(class='fa fa-twitter')
+          | Inicio con twitter
+        a(class='btn btn-block btn-social btn-github' href="#/login/auth/github")
+          span(class='fa fa-github')
+          | Inicio con Github
+>>>>>>> 8ef22dc7c040271198253f30bcc3d975435f9237
 
 block append script
   script(src='/javascripts/login_form.js' type='text/javascript')
