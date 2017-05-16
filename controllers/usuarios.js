@@ -22,7 +22,7 @@ function blank(req, res, next) {
     else res.render('index', { usuario });
   });
 }
-function crear(req, res, next){
+function crear(req, res, next) {
   logger.debug("Crear Usuario");
 	if (req.body.password) {
 		bcrypt.hash(req.body.password, null, null, (err, hash) => {
@@ -60,6 +60,7 @@ function crear(req, res, next){
 						code,
 						message
 					};
+                    //res.render('/users');
 					next();
 				});
 			}
@@ -108,7 +109,11 @@ function actualizar(req, res, next) {
 function borrar(req, res, next){
   logger.debug("Borrar Usuario");
   Usuario.remove({_id: req.params.id}, (err, usuario)=>{
-    next();
+      res.locals.status = {
+          code:'success',
+          message:'Usuario eliminado Correctamente.'
+      };
+      next();
   });
 }
 
@@ -118,5 +123,5 @@ module.exports = {
   ver,
   actualizar,
   borrar,
-	editar
+  editar
 }

@@ -1,14 +1,15 @@
-const express = require('express'),
-      path = require('path'),
-      favicon = require('serve-favicon'),
-      logger = require('morgan'),
-      cookieParser = require('cookie-parser'),
-      bodyParser = require('body-parser'),
-      session = require('express-session'),
-      passport = require('passport'),
-      Usuario = require('./models/usuario');
+const express = require('express')
+, path = require('path')
+, favicon = require('serve-favicon')
+, logger = require('morgan')
+, cookieParser = require('cookie-parser')
+, bodyParser = require('body-parser')
+, session = require('express-session')
+, passport = require('passport')
+, methodOverride = require('method-override')
+, Usuario = require('./models/usuario')
 
-const index = require('./routes/index')
+, index = require('./routes/index')
 , users = require('./routes/usuarios')
 , login = require('./routes/login')
 , logout = require('./routes/logout')
@@ -29,11 +30,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(session({
   secret:'abcd12345',
   resave: false,
-  saveUnitialized: true
+  saveUninitialized: false
 }));
 app.use('/auth', auth);
 require('./auth')(passport);

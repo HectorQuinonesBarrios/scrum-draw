@@ -58,6 +58,8 @@ html
                     li
                       a(href='#') Separated link
 
+    if(status != undefined)
+      div(class=`alert alert-${status.code}`) #{status.message}
     block content
 
 
