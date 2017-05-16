@@ -6,7 +6,7 @@ const express = require('express'),
       logger = log4js.getLogger();
 
 function login_form(req, res, next) {
-  res.render('login/login_form', { title: 'Express' });
+  res.render('login/login_form');
 }
 
 function login(req, res, next) {

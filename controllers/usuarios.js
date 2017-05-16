@@ -19,7 +19,7 @@ function blank(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if (err) throw err;
     else if (!usuario) res.render('users/blank', { usuario: usr });
-    else res.render('index', { usuario });
+    else res.render('index', { usuario, status: res.locals.status });
   });
 }
 function crear(req, res, next) {
@@ -27,7 +27,7 @@ function crear(req, res, next) {
 	if (req.body.password) {
 		bcrypt.hash(req.body.password, null, null, (err, hash) => {
 			let code = '',
-					message = '';
+				message = '';
 			if (err) {
 				code = 'danger';
 				message = 'No se ha podido guardar el usuario.';
@@ -60,7 +60,6 @@ function crear(req, res, next) {
 						code,
 						message
 					};
-                    //res.render('/users');
 					next();
 				});
 			}
@@ -73,13 +72,11 @@ function ver(req, res, next){
   logger.debug("Ver Usuario");
   logger.info(req.params.id);
   Usuario.findOne({_id:req.params.id}, (err, usuario)=>{
-  //  res.render('users/show', {'user':user});
   if(err){
     //TODO
     throw err;
   }else {
-    res.status(200).json({status:"success"});
-    next();
+    res.render('users/show', { usuario });
   }
 
   });
@@ -101,7 +98,18 @@ function actualizar(req, res, next) {
   	domicilio: req.body.domicilio,
   	habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
   };
-  Usuario.update({_id: req.params.id},{$set: usuario}, (err, usuario) =>{
+  let code, status;
+  Usuario.update({_id: req.params.id}, {$set: usuario}, (err, usuario) =>{
+    if (err) {
+      code = 'danger';
+      message = 'Usuario no se pudo modificar.';
+    }
+    code = 'success';
+    message = 'Usuario modificado con éxito.';
+    res.locals.status = {
+      code,
+      message
+    }
     next();
   });
 }

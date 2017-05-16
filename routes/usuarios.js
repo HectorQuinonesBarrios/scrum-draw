@@ -8,4 +8,6 @@ router.get('/:id/edit', usuariosController.editar);
 router.delete('/:id', usuariosController.borrar);
 router.put('/:id', usuariosController.actualizar);
 
+router.use('/', usuariosController.blank);
+
 module.exports = router;
