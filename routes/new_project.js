@@ -7,4 +7,6 @@ router.get('/', new_projectController.blank);
 
 router.post('/', new_projectController.crear);
 
+router.use('/', new_projectController.blank);
+
 module.exports = router;

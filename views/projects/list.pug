@@ -10,13 +10,10 @@ block content
           each proyecto in proyectos
             li
               time(datetime='2014-07-20')
-                span.day= proyecto.fecha_solicitud
-                |
-                span.month= proyecto.fecha_arranque
-                |
-                span.year= proyecto.product_owner
-                |
-                span.time= proyecto.scrum_master
+                p= proyecto.fecha_solicitud
+                p= proyecto.fecha_arranque
+                p= proyecto.product_owner
+                p= proyecto.scrum_master
               .info
                 h2.title= proyecto.nombre
                 p.desc= proyecto.descripcion

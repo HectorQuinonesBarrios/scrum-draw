@@ -22,18 +22,20 @@ function crear(req, res, next) {
   	descripcion: req.body.descripcion,
   	scrum_master: req.body.scrum_master,
   	product_owner: req.body.product_owner,
-		equipo_desarrollo: req.body.equipo_desarrollo
+		equipo_desarrollo: [{usuario_id: req.body.equipo_desarrollo,rol: "kk"}]
 //	, equipo_desarrollo: [{
 //  		usuario_id: ObjectId, rol: String
 //  	}]
-  });
 
+  });
+  
 	proyecto.save((err, object)=>{
 		let code;
 		let message;
 		if(err){
 		  code = 'danger';
 		  message = 'No se ha podido crear el proyecto.';
+      logger.debug(err);
 		}else{
 		  code = 'success';
 		  message = 'Proyecto creado correctamente.';
@@ -43,7 +45,7 @@ function crear(req, res, next) {
 		  code,
 		  message
 		};
-		res.redirect('/');
+		next();
 	});
 }
 
