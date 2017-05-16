@@ -47,6 +47,7 @@ function crear(req, res, next){
 					domicilio: req.body.domicilio,
 					habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
 				});
+        logger.debug(usuario);
 				usuario.save((err, object)=>{
 					if(err){
 						code = 'danger';

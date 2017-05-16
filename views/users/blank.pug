@@ -6,5 +6,5 @@ block content
     h1.well Nuevo usuario
     .col-lg-12.well
       .row
-        form(action='/users/', method='POST')
-        include user-form.pug
+        form(name='crear', id='form-add-user', method='POST', action='/users')
+          include user-form.pug
