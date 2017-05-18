@@ -18,7 +18,7 @@ router.get('/auth/facebook/callback',
 
 router.get('/auth/twitter',
     passport.authenticate('twitter', {
-      scope: 'email'
+      scope: 'include_email'
     }));
 
 router.get('/auth/twitter/callback',
