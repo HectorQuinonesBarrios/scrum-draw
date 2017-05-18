@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "run-p pug-it:w server",
+    "pug-it": "pug src",
+    "pug-it:w": "pug src -P -w",
+    "server": "supervisor ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -22,5 +25,9 @@
     "pug": "^2.0.0-rc.1",
     "serve-favicon": "~2.3.2",
     "method-override": "^2.3.8"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "pug-cli": "^1.0.0-alpha6"
   }
 }
