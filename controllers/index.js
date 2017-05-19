@@ -8,6 +8,7 @@ const logger = log4js.getLogger();
 function index(req, res, next) {
   logger.debug('INDEX');
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    logger.debug(usuario);
     usuario = usuario || {nombre: ''};
     res.render('index', { usuario });
   });

@@ -41,6 +41,13 @@ app.use('/auth', auth);
 require('./auth')(passport);
 app.use(passport.initialize());
 
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+passport.deserializeUser(function (id, done) {
+    var user = USERS[id];
+    done(null, user);
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));

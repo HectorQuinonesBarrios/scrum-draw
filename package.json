@@ -5,7 +5,9 @@
   "scripts": {
     "start": "run-p riot-compile server",
     "server": "supervisor ./bin/www",
-    "riot-compile": "riot -w --template pug views public"
+    "riot-compile": "riot -w --template pug views public",
+    "start2": "riot-compile && server"
+
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

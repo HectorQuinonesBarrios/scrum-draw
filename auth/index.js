@@ -16,8 +16,20 @@ module.exports = () => {
             callbackURL: "http://localhost:3000/login/auth/facebook/callback",
             profileFields: ["id","emails","name"]
         },
-        function(accessToken, refreshToken, profile, cb) {
+        function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
+            Usuario.findOne({facebookID: profile.id}, (err, usuario)=>{
+              if(err) done(err);
+              else {
+                if(usuario){
+                  logger.debug(usuario);
+                  done(null, usuario);
+                } else {
+                  logger.debug(profile);
+                  done(null, profile);
+                }
+              }
+            });
         }
     ));
 
@@ -31,6 +43,18 @@ module.exports = () => {
         },
         function(token, tokenSecret, profile, done) {
             logger.debug(profile);
+            Usuario.findOne({twitterID: profile.id}, (err, usuario)=>{
+              if(err) done(err);
+              else {
+                if(usuario){
+                  logger.debug(usuario);
+                  done(null, usuario);
+                } else {
+                  logger.debug(profile);
+                  done(null, profile);
+                }
+              }
+            });
         }
     ));
 
@@ -44,6 +68,18 @@ module.exports = () => {
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
+            Usuario.findOne({githubID: profile.id}, (err, usuario)=>{
+              if(err) done(err);
+              else {
+                if(usuario){
+                  logger.debug(usuario);
+                  done(null, usuario);
+                } else {
+                  logger.debug(profile);
+                  done(null, profile);
+                }
+              }
+            });
         }
     ));
 }

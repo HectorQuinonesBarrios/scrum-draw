@@ -1,6 +1,8 @@
 .col-sm-12
 	.row
 		.col-sm-12.form-group
+			input(value=`${usuario.id}` name='id' type='hidden')
+			input(value=`${usuario.social}` name='social' type='hidden')
 			label Nombre
 			|
 			input.form-control(value=`${usuario.nombre}` required='required' name='nombre' type='text' placeholder='Nombre Completo..')

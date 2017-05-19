@@ -11,10 +11,16 @@ function login_form(req, res, next) {
 
 function login(req, res, next) {
     logger.debug('LOGIN');
-    Usuario.findOne({email: req.body.email}, (err, usuario) => {
-       if (err) res.redirect('/login');
+    Usuario.findOne({"local.email": req.body.email}, (err, usuario) => {
+      logger.debug(req.body.email);
+       if (err) {
+         throw err;
+         res.redirect('/login');
+       }
         else {
             if (usuario) {
+                logger.debug(usuario);
+
                 bcrypt.compare(req.body.password, usuario.password, (err, resu) => {
                     if (resu) {
                         req.session.usuario = usuario._id;
@@ -30,7 +36,80 @@ function login(req, res, next) {
     });
 }
 
+function facebook(req, res, next){
+  logger.debug('FB LOGIN');
+  logger.debug(req.user.id, req.user.emails[0].value, req.user.name.givenName + req.user.name.familyName );
+  Usuario.findOne({facebook :{facebookID:req.user.id}},(err, usuario)=>{
+    if(err) res.redirect('/');
+    else {
+      if(usuario){
+        req.session.usuario = usuario._id;
+        res.redirect('/projects');
+      } else {
+        res.render('users/blank', {'usuario':{
+          id : req.user.id,
+          social: 'facebookID',
+          nombre : req.user.name.givenName + ' ' + req.user.name.familyName,
+          email : req.user.emails[0].value,
+          curp: '',
+          rfc: ''
+        }});
+      }
+    }
+
+  });
+}
+function twitter(req, res, next){
+  logger.debug('TW LOGIN');
+  logger.debug(req.user);
+  Usuario.findOne({twitter :{twitterID:req.user.id}},(err, usuario)=>{
+    if(err) res.redirect('/');
+    else {
+      if(usuario){
+        req.session.usuario = usuario._id;
+        res.redirect('/projects');
+      } else {
+        res.render('users/blank', {'usuario':{
+          id : req.user.id,
+          social: 'twitterID',
+          nombre : req.user.displayName,
+          email : req.user.emails[0].value,
+          curp: '',
+          rfc: ''
+        }});
+      }
+    }
+
+  });
+}
+
+function github(req, res, next){
+  logger.debug('GH LOGIN');
+  logger.debug(req.user);
+  Usuario.findOne({github :{githubID:req.user.id}},(err, usuario)=>{
+    if(err) res.redirect('/');
+    else {
+      if(usuario){
+        req.session.usuario = usuario._id;
+        res.redirect('/projects');
+      } else {
+        res.render('users/blank', {'usuario':{
+          id : req.user.id,
+          social: 'githubID',
+          nombre : req.user.displayName,
+          email : req.user.emails[0].value,
+          curp: '',
+          rfc: ''
+        }});
+      }
+    }
+
+  });
+}
 module.exports = exports = {
   login,
-  login_form
+  login_form,
+  facebook,
+  twitter,
+  github
 };
