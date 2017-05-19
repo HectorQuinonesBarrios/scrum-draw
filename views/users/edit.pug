@@ -6,5 +6,5 @@ block content
     h1.well Editar usuario
     .col-lg-12.well
       .row
-        form(name='editar', id='form-edit-user',  action=`/users/${usuario._id}?_method=PUT`, method='PUT')
+        form(name='editar', id='form-edit-user',  action=`/users/${usuario._id}?_method=PUT`, method='POST')
           include user-form.pug

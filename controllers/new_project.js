@@ -28,7 +28,7 @@ function crear(req, res, next) {
 //  	}]
 
   });
-  
+
 	proyecto.save((err, object)=>{
 		let code;
 		let message;

@@ -1,9 +1,11 @@
 {
   "name": "scrum-draw",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "run-p riot-compile server",
+    "server": "supervisor ./bin/www",
+    "riot-compile": "riot -w --template pug views public"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -23,5 +25,9 @@
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.0-rc.1",
     "serve-favicon": "~2.3.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "riot": "^3.5.0"
   }
 }

@@ -23,11 +23,11 @@ function blank(req, res, next) {
   });
 }
 function crear(req, res, next) {
-  logger.debug("Crear Usuario");
+    logger.debug("Crear Usuario");
+    let code = '',
+        message = '';
 	if (req.body.password) {
 		bcrypt.hash(req.body.password, null, null, (err, hash) => {
-			let code = '',
-				message = '';
 			if (err) {
 				code = 'danger';
 				message = 'No se ha podido guardar el usuario.';
@@ -38,7 +38,7 @@ function crear(req, res, next) {
 				next();
 			} else {
 				let usuario = new Usuario({
-					local: {
+          local: {
             nombre: req.body.nombre,
   					password: hash,
   					email: req.body.email,
@@ -46,8 +46,9 @@ function crear(req, res, next) {
   					curp: req.body.curp,
   					rfc: req.body.rfc,
   					domicilio: req.body.domicilio,
-  					habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
+  					habilidades: JSON.parse(req.body.habilidades)
           }
+
 				});
         logger.debug(usuario);
 				usuario.save((err, object)=>{
@@ -67,13 +68,22 @@ function crear(req, res, next) {
 			}
 		});
 	}
+    else {
+        code = 'danger';
+        message = 'Error al crear el usuario';
+        res.locals.status = {
+            code,
+            message
+        };
+        next();
+    }
 }
 
 
 function ver(req, res, next){
   logger.debug("Ver Usuario");
   logger.info(req.params.id);
-  Usuario.findOne({_id:req.params.id}, (err, usuario)=>{
+  Usuario.findOne({_id: req.params.id}, (err, usuario)=>{
   if(err){
     //TODO
     throw err;
@@ -91,29 +101,63 @@ function editar(req, res, next) {
 }
 
 function actualizar(req, res, next) {
-  logger.debug("Actualizar Usuario");
-  let usuario = {
-    nombre: req.body.nombre,
-  	fecha_nacimiento: req.body.fecha_nacimiento,
-  	curp: req.body.curp,
-  	rfc: req.body.rfc,
-  	domicilio: req.body.domicilio,
-  	habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
-  };
-  let code, status;
-  Usuario.update({_id: req.params.id}, {$set: usuario}, (err, usuario) =>{
-    if (err) {
-      code = 'danger';
-      message = 'Usuario no se pudo modificar.';
+    logger.debug("Actualizar Usuario");
+    let code, message;
+    if (req.params.id) {
+        if (req.body.password) {
+            bcrypt.hash(req.body.password, null, null, (err, hash) => {
+                if (err) {
+                    code = 'danger';
+                    message = 'No se ha podido editar el usuario.';
+                    res.locals.status = {
+                        code,
+                        message
+                    };
+                    next();
+                } else {
+                    let usuario = {
+                        nombre: req.body.nombre,
+                        password: hash,
+                        fecha_nacimiento: req.body.fecha_nacimiento,
+                        curp: req.body.curp,
+                        rfc: req.body.rfc,
+                        domicilio: req.body.domicilio,
+                        habilidades: JSON.parse(req.body.habilidades)
+                    };
+                    Usuario.update({_id: req.params.id}, {$set: usuario}, (err, usuario)=>{
+                        if (err) {
+                            code = 'danger';
+                            message = 'Usuario no se pudo modificar.';
+                        } else {
+                            code = 'success';
+                            message = 'Usuario modificado con éxito.';
+                        }
+                        res.locals.status = {
+                            code,
+                            message
+                        }
+                        next();
+                    });
+                }
+            });
+        } else {
+            code = 'danger';
+            message = 'Debe ingresar una contraseña.';
+            res.locals.status = {
+                code,
+                message
+            }
+            next();
+        }
+    } else {
+        code = 'danger';
+        message = 'Usuario no se pudo modificar.';
+        res.locals.status = {
+            code,
+            message
+        }
+        next();
     }
-    code = 'success';
-    message = 'Usuario modificado con éxito.';
-    res.locals.status = {
-      code,
-      message
-    }
-    next();
-  });
 }
 
 function borrar(req, res, next){

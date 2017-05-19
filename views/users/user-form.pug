@@ -3,35 +3,37 @@
 		.col-sm-12.form-group
 			label Nombre
 			|
-			input.form-control(value=`${usuario.nombre}`, required='required', name='nombre', type='text', placeholder='Nombre Completo..')
-	.form-group
-		label Dirección
-		textarea.form-control(required='required', name='domicilio', placeholder='Domicilio..', rows='3') #{usuario.domicilio}
+			input.form-control(value=`${usuario.nombre}` required='required' name='nombre' type='text' placeholder='Nombre Completo..')
+	.row
+		.col-sm-6.form-group
+			label Dirección
+			|
+			textarea.form-control(required='required' name='domicilio' placeholder='Domicilio..' rows='3') #{usuario.domicilio}
+		.col-sm-6.form-group
+			label Habilidades
+			|
+			abilities-list
 	.row
 		.col-sm-6.form-group
 			label CURP
 			|
-			input.form-control(value=`${usuario.curp}`, required='required', name='curp', type='text', placeholder='CURP..')
+			input.form-control(value=`${usuario.curp}` required='required' name='curp' type='text' placeholder='CURP..')
 		.col-sm-6.form-group
 			label RFC
 			|
-			input.form-control(value=`${usuario.rfc}`, required='required', name='rfc', type='text', placeholder='RFC..')
-	.row
-		.col-sm-12.form-group
-			label Habilidades
-			|
-			textarea.form-control(required='required', name='habilidad', rows='3', placeholder='Escriba tus habilidades..')
-	.row
-		.col-sm-12.form-group
-			label Rango
-			input.form-control(required='required', name='rango', type='radio', value='Alto')
+			input.form-control(value=`${usuario.rfc}` required='required' name='rfc' type='text' placeholder='RFC..')
 	.row
 		.col-sm-6.form-group
 			label Email
 			|
-			input.form-control(value=`${usuario.email}`, required='required', name='email', type='email', placeholder='Escriba el Email..')
+			input.form-control(value=`${usuario.email}` required='required' name='email' type='email' placeholder='Escriba el Email..')
 		.col-sm-6.form-group
 			label Contraseña
 			|
-			input.form-control(required='required', name='password', type='password', placeholder='Escriba la contraseña..')
+			input.form-control(required='required' name='password' type='password' placeholder='Escriba la contraseña..')
 	button.btn.btn-lg.btn-info(type='submit') Regístrame
+
+script(src='/riot/riot.min.js')
+script(src='/abilities-list/abilities-list.js')
+script.
+	riot.mount('abilities-list', {habilidades: !{JSON.stringify(usuario.habilidades)}})
