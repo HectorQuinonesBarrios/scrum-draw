@@ -1,12 +1,11 @@
 {
   "name": "scrum-draw",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "run-p pug-it:w server",
-    "pug-it": "pug src",
-    "pug-it:w": "pug src -P -w",
-    "server": "supervisor ./bin/www"
+    "start": "run-p riot-compile server",
+    "server": "supervisor ./bin/www",
+    "riot-compile": "riot -w --template pug views public"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -28,7 +27,6 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
-    "npm-run-all": "^4.0.2",
-    "pug-cli": "^1.0.0-alpha6"
+    "npm-run-all": "^4.0.2"
   }
 }
