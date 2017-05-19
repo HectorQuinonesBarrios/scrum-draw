@@ -38,14 +38,16 @@ function crear(req, res, next) {
 				next();
 			} else {
 				let usuario = new Usuario({
-					nombre: req.body.nombre,
-					password: hash,
-					email: req.body.email,
-					fecha_nacimiento: req.body.fecha_nacimiento,
-					curp: req.body.curp,
-					rfc: req.body.rfc,
-					domicilio: req.body.domicilio,
-					habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
+					local: {
+            nombre: req.body.nombre,
+  					password: hash,
+  					email: req.body.email,
+  					fecha_nacimiento: req.body.fecha_nacimiento,
+  					curp: req.body.curp,
+  					rfc: req.body.rfc,
+  					domicilio: req.body.domicilio,
+  					habilidades: [{nombre: req.body.habilidad, rank: req.body.rango}]
+          }
 				});
         logger.debug(usuario);
 				usuario.save((err, object)=>{
@@ -60,7 +62,7 @@ function crear(req, res, next) {
 						code,
 						message
 					};
-					next();
+					res.redirect('/login');
 				});
 			}
 		});
