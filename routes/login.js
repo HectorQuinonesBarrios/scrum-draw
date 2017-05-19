@@ -5,7 +5,7 @@ const loginController = require('../controllers/login');
 
 /* GET Login/Register page. */
 router.get('/auth/facebook',
-    passport.authenticate('facebook'));
+    passport.authenticate('facebook', {scope : ['email']}));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
@@ -17,7 +17,9 @@ router.get('/auth/facebook/callback',
     });
 
 router.get('/auth/twitter',
-    passport.authenticate('twitter'));
+    passport.authenticate('twitter', {
+      scope: 'include_email'
+    }));
 
 router.get('/auth/twitter/callback',
     passport.authenticate('twitter', {

@@ -13,7 +13,8 @@ module.exports = () => {
     passport.use(new FacebookStrategy({
             clientID: FACEBOOK_APP_ID,
             clientSecret: FACEBOOK_APP_SECRET,
-            callbackURL: "http://localhost:3000/login/auth/facebook/callback"
+            callbackURL: "http://localhost:3000/login/auth/facebook/callback",
+            profileFields: ["id","emails","name"]
         },
         function(accessToken, refreshToken, profile, cb) {
             logger.debug(profile);
@@ -25,6 +26,7 @@ module.exports = () => {
     passport.use(new TwitterStrategy({
             consumerKey: TWITTER_CONSUMER_KEY,
             consumerSecret: TWITTER_CONSUMER_SECRET,
+            userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
             callbackURL: "http://localhost:3000/login/auth/twitter/callback"
         },
         function(token, tokenSecret, profile, done) {
@@ -37,7 +39,8 @@ module.exports = () => {
     passport.use(new GitHubStrategy({
             clientID: GITHUB_CLIENT_ID,
             clientSecret: GITHUB_CLIENT_SECRET,
-            callbackURL: "http://localhost:3000/login/auth/github/callback"
+            callbackURL: "http://localhost:3000/login/auth/github/callback",
+            scope: [ 'user:email' ]
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
