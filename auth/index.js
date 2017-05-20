@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express'),
     passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy,
@@ -18,7 +20,7 @@ module.exports = () => {
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({facebookID: profile.id}, (err, usuario)=>{
+            Usuario.findOne({'facebook.facebookID': profile.id}, (err, usuario)=>{
               if(err) done(err);
               else {
                 if(usuario){
@@ -43,7 +45,7 @@ module.exports = () => {
         },
         function(token, tokenSecret, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({twitterID: profile.id}, (err, usuario)=>{
+            Usuario.findOne({'twitter.twitterID': profile.id}, (err, usuario)=>{
               if(err) done(err);
               else {
                 if(usuario){
@@ -68,7 +70,7 @@ module.exports = () => {
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({githubID: profile.id}, (err, usuario)=>{
+            Usuario.findOne({'github.githubID': profile.id}, (err, usuario)=>{
               if(err) done(err);
               else {
                 if(usuario){

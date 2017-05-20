@@ -7,14 +7,16 @@ const bcrypt = require('bcrypt-nodejs');
 
 function blank(req, res, next) {
     let usr = {
-        nombre: '',
-        password: '',
-        email: '',
-        fecha_nacimiento: '',
-        curp: '',
-        rfc: '',
-        domicilio: '',
-        habilidades: ''
+        local: {
+            nombre: '',
+            password: '',
+            email: '',
+            fecha_nacimiento: '',
+            curp: '',
+            rfc: '',
+            domicilio: '',
+            habilidades: ''
+        }
     }
     Usuario.findOne({
         _id: req.session.usuario
@@ -79,10 +81,7 @@ function crear(req, res, next) {
                                 curp: req.body.curp,
                                 rfc: req.body.rfc,
                                 domicilio: req.body.domicilio,
-                                habilidades: [{
-                                    nombre: 'kk',
-                                    rank: 'alto'
-                                }]
+                                habilidades: []
                                 //habilidades: JSON.parse(req.body.habilidades)
                             },
                             twitter: {
@@ -100,10 +99,7 @@ function crear(req, res, next) {
                                 curp: req.body.curp,
                                 rfc: req.body.rfc,
                                 domicilio: req.body.domicilio,
-                                habilidades: [{
-                                    nombre: 'kk',
-                                    rank: 'alto'
-                                }]
+                                habilidades: []
                                 //habilidades: JSON.parse(req.body.habilidades)
                             },
                             github: {
@@ -201,13 +197,15 @@ function actualizar(req, res, next) {
                     next();
                 } else {
                     let usuario = {
-                        nombre: req.body.nombre,
-                        password: hash,
-                        fecha_nacimiento: req.body.fecha_nacimiento,
-                        curp: req.body.curp,
-                        rfc: req.body.rfc,
-                        domicilio: req.body.domicilio,
-                        habilidades: JSON.parse(req.body.habilidades)
+                        local: {
+                            nombre: req.body.nombre,
+                            password: hash,
+                            fecha_nacimiento: req.body.fecha_nacimiento,
+                            curp: req.body.curp,
+                            rfc: req.body.rfc,
+                            domicilio: req.body.domicilio,
+                            habilidades: JSON.parse(req.body.habilidades)
+                        }
                     };
                     Usuario.update({
                         _id: req.params.id

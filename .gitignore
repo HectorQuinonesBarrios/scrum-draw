@@ -59,3 +59,8 @@ typings/
 
 #pug
 /src/**/*.html
+
+# Riot components
+public/abilities-list/*.js
+public/new-card/*.js
+

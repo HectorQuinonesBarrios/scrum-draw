@@ -1,16 +1,16 @@
 .col-sm-12
 	.row
 		.col-sm-12.form-group
-			input(value=`${usuario.id}` name='id' type='hidden')
-			input(value=`${usuario.social}` name='social' type='hidden')
+			input(value=`${usuario.local.id}` name='id' type='hidden')
+			input(value=`${usuario.local.social}` name='social' type='hidden')
 			label Nombre
 			|
-			input.form-control(value=`${usuario.nombre}` required='required' name='nombre' type='text' placeholder='Nombre Completo..')
+			input.form-control(value=`${usuario.local.nombre}` required='required' name='nombre' type='text' placeholder='Nombre Completo..')
 	.row
 		.col-sm-6.form-group
 			label Dirección
 			|
-			textarea.form-control(required='required' name='domicilio' placeholder='Domicilio..' rows='3') #{usuario.domicilio}
+			textarea.form-control(required='required' name='domicilio' placeholder='Domicilio..' rows='3') #{usuario.local.domicilio}
 		.col-sm-6.form-group
 			label Habilidades
 			|
@@ -19,16 +19,16 @@
 		.col-sm-6.form-group
 			label CURP
 			|
-			input.form-control(value=`${usuario.curp}` required='required' name='curp' type='text' placeholder='CURP..')
+			input.form-control(value=`${usuario.local.curp}` required='required' name='curp' type='text' placeholder='CURP..')
 		.col-sm-6.form-group
 			label RFC
 			|
-			input.form-control(value=`${usuario.rfc}` required='required' name='rfc' type='text' placeholder='RFC..')
+			input.form-control(value=`${usuario.local.rfc}` required='required' name='rfc' type='text' placeholder='RFC..')
 	.row
 		.col-sm-6.form-group
 			label Email
 			|
-			input.form-control(value=`${usuario.email}` required='required' name='email' type='email' placeholder='Escriba el Email..')
+			input.form-control(value=`${usuario.local.email}` required='required' name='email' type='email' placeholder='Escriba el Email..')
 		.col-sm-6.form-group
 			label Contraseña
 			|
@@ -38,4 +38,4 @@
 script(src='/riot/riot.min.js')
 script(src='/abilities-list/abilities-list.js')
 script.
-	riot.mount('abilities-list', {habilidades: !{JSON.stringify(usuario.habilidades)}})
+	riot.mount('abilities-list', {habilidades: !{JSON.stringify(usuario.local.habilidades)}})

@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= usuario.nombre
-  p Bienvenido #{usuario.nombre}
+    if(usuario && usuario._id)
+        h1= usuario.local.nombre
+        p Bienvenido #{usuario.local.nombre}
+    else
+        h1 Bienvenido a SCRUM-DRAW

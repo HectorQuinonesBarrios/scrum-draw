@@ -7,7 +7,11 @@ const UsuarioSchema = Schema({
 	local:{
 		nombre: String,
 		password: String,
-		email: String,
+		email: {
+            type: String,
+            unique: true,
+            required: true
+        },
 		fecha_nacimiento: Date,
 		curp: String,
 		rfc: String,
@@ -15,15 +19,24 @@ const UsuarioSchema = Schema({
 		habilidades: [{nombre: String, rank: String}]
 	},
 	facebook: {
-		facebookID: String,
+		facebookID: {
+            type: String,
+            unique: true
+        },
 		token: String
 	},
 	twitter: {
-		twitterID: String,
+		twitterID: {
+            type: String,
+            unique: true
+        },
 		token: String
 	},
 	github: {
-		githubID: String,
+		githubID: {
+            type: String,
+            unique: true
+        },
 		token: String
 	}
 
