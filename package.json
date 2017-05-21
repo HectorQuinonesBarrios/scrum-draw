@@ -17,7 +17,7 @@
     "log4js": "^1.1.1",
     "method-override": "^2.3.8",
     "moment": "^2.18.1",
-    "mongoose": "^4.9.7",
+    "mongoose": "^4.10.0",
     "morgan": "~1.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "npm-run-all": "^4.0.2",
-    "riot": "^3.5.0"
+    "riot": "^3.5.1"
   }
 }
