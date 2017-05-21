@@ -2,6 +2,7 @@
 const express = require('express'),
       Proyecto = require('../models/proyecto'),
       Usuario = require('../models/usuario'),
+      moment = require('moment'),
       log4js = require('log4js'),
       logger = log4js.getLogger();
 
@@ -24,7 +25,6 @@ function crear(req, res, next) {
   	scrum_master: req.body.scrum_master,
   	product_owner: req.body.product_owner,
 		equipo_desarrollo: JSON.parse(req.body.equipo_desarrollo)
-
   });
 
 	proyecto.save((err, object)=>{
@@ -55,7 +55,7 @@ function list (req, res, next) {
 			throw err;
 		} else
       console.log(proyectos);
-			res.render('projects/list.pug', {proyectos, usuario});
+			res.render('projects/list.pug', {proyectos, usuario, moment});
 	});
   });
 }
