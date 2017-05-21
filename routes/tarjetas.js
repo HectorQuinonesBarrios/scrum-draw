@@ -1,3 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const usersController = require('../controllers/tarjetas');
+const express = require('express'),
+      router = express.Router(),
+      tarjetasController = require('../controllers/tarjetas');
+
+router.post('/', tarjetasController.crearTarjeta);
+
+module.exports = router;

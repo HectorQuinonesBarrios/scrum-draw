@@ -60,6 +60,7 @@ app.use('/kanban', kanban);
 app.use('/projects', projects);
 app.use('/new_project', new_project);
 app.use('/statistics', statistics);
+app.use('/tarjetas', tarjetas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

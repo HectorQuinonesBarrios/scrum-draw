@@ -4,6 +4,44 @@ block append head
   link(rel='stylesheet', href='/stylesheets/kanban.css')
 
 block content
+  // Modal
+  #myModal.modal.fade(role='dialog')
+    .modal-dialog
+      // Modal content
+      .modal-content
+        form(name='crear', id='form-add-card', method='POST', action='/tarjetas')
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Agregar tarjeta
+          .modal-body
+            .row
+              .col-sm-12.form-group
+                h5.modal-title Narrativa de la historia
+                input.form-control(name='como' required='required' type='text' placeholder='Como')
+                br
+                input.form-control(name='quiero' required='required' type='text' placeholder='Quiero')
+                br
+                input.form-control(name='manera' required='required' type='text' placeholder='De tal manera')
+                br
+                h5.modal-title  Criterios de aceptacion
+                input.form-control(name='dado' required='required' type='text' placeholder='Dado')
+                br
+                input.form-control(name='cuando' required='required' type='text' placeholder='Cuando')
+                br
+                input.form-control(name='entonces' required='required' type='text' placeholder='Entonces')
+              
+          .modal-footer
+            .col-sm-2
+              label Valor 
+              select(name="valor")
+                option(value=1) 1
+                option(value=2) 2
+                option(value=3) 3
+                option(value=5) 5
+                option(value=8) 8
+            button.btn.btn-default(type='submit') Agregar
+            button.btn.btn-info(type='button' data-dismiss='modal') Cerrar
+
   .container-fluid
   #sortableKanbanBoards.row
     .panel.panel-primary.kanban-col
@@ -12,15 +50,21 @@ block content
         i.fa.fa-2x.fa-plus-circle.pull-right
       .panel-body
         #TODO.kanban-centered
-          article#item6.kanban-entry.grab(draggable='true')
-            .kanban-entry-inner
-              .kanban-label
-                h2
-                  a(href='#') Prueba
-                p
-                  Esto es una prueba
+          each tarjeta in tarjetas
+            article#item6.kanban-entry.grab(draggable='true')
+              .kanban-entry-inner
+                .kanban-label
+                  h2="Tarea con valor de " + tarjeta.valor
+                    
+                  p="Como : " + tarjeta.narrativa.como
+                  p="Quiere : " + tarjeta.narrativa.quiero
+                  p="De Manera Que : " + tarjeta.narrativa.manera
+                    
+                  p="Dado : " + tarjeta.criterios.dado
+                  p="Cuando : " + tarjeta.criterios.cuando
+                  p="Entonces : " + tarjeta.criterios.entonces
       .panel-footer
-        a(href='#') Add a card...
+        button.btn.btn-info.btn-sm(type='button', data-toggle='modal', data-target='#myModal') Agregar tarjeta
     .panel.panel-primary.kanban-col
       .panel-heading
         | Release backlog
@@ -29,7 +73,7 @@ block content
         #DOING.kanban-centered
 
       .panel-footer
-        a(href='#') Add a card...
+        //a(href='#') Add a card...
     .panel.panel-primary.kanban-col
       .panel-heading
         | Sprint backlog
@@ -38,7 +82,7 @@ block content
         #DONE.kanban-centered
 
       .panel-footer
-        a(href='#') Add a card...
+        //a(href='#') Add a card...
   #processing-modal.modal.modal-static.fade(role='dialog', aria-hidden='true')
     .modal-dialog=''
       .modal-content

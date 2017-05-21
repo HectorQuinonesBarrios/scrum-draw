@@ -6,11 +6,19 @@ const Schema = mongoose.Schema,
 
 const TarjetaSchema = Schema({
 	valor: Number,
-	narrativa: Object,
-	criterios: Object,
+	narrativa: {
+		como: String,
+		quiero: String,
+		manera: String
+	},
+	criterios: {
+		dado: String,
+		cuando: String,
+		entonces: String
+	},
 	validada: Boolean,
-	terminado: Boolean,
-	asignados: [{usuario_id: ObjectId}]
+	terminado: Boolean
+	//, asignados: [{usuario_id: ObjectId}]
 });
 
 module.exports = exports = mongoose.model('Tarjeta', TarjetaSchema);

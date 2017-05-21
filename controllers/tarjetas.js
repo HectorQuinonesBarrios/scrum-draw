@@ -6,22 +6,30 @@ const logger = log4js.getLogger();
 
 function  crearTarjeta(req, res, next){
   logger.debug('Crear Tarjeta');
-  let tarjeta = new TarjetaSchema ({
+  let tarjeta = new Tarjeta ({
     valor: req.body.valor,
-  	narrativa: req.body.narrativa,
-  	criterios: req.body.criterios,
+    narrativa: {
+  		como: req.body.como,
+  		quiero: req.body.quiero,
+  		manera: req.body.manera
+  	},
+  	criterios: {
+  		dado: req.body.dado,
+  		cuando: req.body.cuando,
+  		entonces: req.body.entonces
+  	}/*,
   	validada: req.body.validada,
-  	terminado: req.body.terminado,
-  	asignados: [{usuario_id: req.body.asignados}]
+  	terminado: req.body.terminado
+    ,asignados: [{usuario_id: req.body.asignados}]*/
   });
 
-Tarjeta.save((err,object)=>{
+tarjeta.save((err,object)=>{
   if(err){
-    //TODO
+    res.redirect('/kanban');
   }
   else{
     //TODO
-    next();
+    res.redirect('/kanban');
   }
 
 });

@@ -2,13 +2,17 @@
 const express = require('express'),
       Backlog = require('../models/backlog'),
       Usuario = require('../models/usuario'),
+      Tarjeta = require('../models/tarjeta'),
       log4js = require('log4js'),
       logger = log4js.getLogger();
 
 function kanban(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     usuario = usuario || {};
-    res.render('kanban/kanban.pug', { usuario });
+    Tarjeta.find((err, tarjetas)=>{
+        res.render('kanban/kanban.pug', { usuario, tarjetas });
+    });
+
   });
 }
 
