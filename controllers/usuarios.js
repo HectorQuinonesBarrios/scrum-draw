@@ -47,10 +47,10 @@ function crear(req, res, next) {
                 };
                 next();
             } else {
-                
+                let usuario;
                 switch (req.body.social) {
                     case 'facebookID':
-                        var usuario = new Usuario({
+                        usuario = new Usuario({
                             local: {
                                 nombre: req.body.nombre,
                                 password: hash,
@@ -59,11 +59,7 @@ function crear(req, res, next) {
                                 curp: req.body.curp,
                                 rfc: req.body.rfc,
                                 domicilio: req.body.domicilio,
-                                habilidades: [{
-                                    nombre: 'kk',
-                                    rank: 'alto'
-                                }]
-                                //habilidades: JSON.parse(req.body.habilidades)
+                                habilidades: JSON.parse(req.body.habilidades)
                             },
                             facebook: {
                                 facebookID: req.body.id
@@ -72,7 +68,7 @@ function crear(req, res, next) {
                         });
                         break;
                     case 'twitterID':
-                        var usuario = new Usuario({
+                        usuario = new Usuario({
                             local: {
                                 nombre: req.body.nombre,
                                 password: hash,
@@ -81,8 +77,7 @@ function crear(req, res, next) {
                                 curp: req.body.curp,
                                 rfc: req.body.rfc,
                                 domicilio: req.body.domicilio,
-                                habilidades: []
-                                //habilidades: JSON.parse(req.body.habilidades)
+                                habilidades: JSON.parse(req.body.habilidades)
                             },
                             twitter: {
                                 twitterID: req.body.id
@@ -90,7 +85,7 @@ function crear(req, res, next) {
                           });
                         break;
                     case 'githubID':
-                        var usuario = new Usuario({
+                        usuario = new Usuario({
                             local: {
                                 nombre: req.body.nombre,
                                 password: hash,
@@ -99,8 +94,7 @@ function crear(req, res, next) {
                                 curp: req.body.curp,
                                 rfc: req.body.rfc,
                                 domicilio: req.body.domicilio,
-                                habilidades: []
-                                //habilidades: JSON.parse(req.body.habilidades)
+                                habilidades: JSON.parse(req.body.habilidades)
                             },
                             github: {
                                 githubID: req.body.id
@@ -109,7 +103,7 @@ function crear(req, res, next) {
                         });
                         break;
                     default:
-                        var usuario = new Usuario({
+                        usuario = new Usuario({
                             local: {
                                 nombre: req.body.nombre,
                                 password: hash,
@@ -123,12 +117,13 @@ function crear(req, res, next) {
                         });
                 }
 
-                logger.debug(usuario);
+                logger.debug(JSON.stringify(usuario));
                 logger.debug(req.body.id);
                 usuario.save((err, object) => {
                     if (err) {
                         code = 'danger';
                         message = 'Error al crear el usuario';
+                        logger.debug(err)
                     } else {
                         code = 'success';
                         message = 'Usuario creado correctamente';

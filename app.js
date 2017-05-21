@@ -15,7 +15,6 @@ const express = require('express')
 , logout = require('./routes/logout')
 , kanban = require('./routes/kanban')
 , projects = require('./routes/projects')
-, new_project = require('./routes/new_project')
 , statistics = require('./routes/statistics')
 , tarjetas = require('./routes/tarjetas');
 
@@ -58,7 +57,6 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/kanban', kanban);
 app.use('/projects', projects);
-app.use('/new_project', new_project);
 app.use('/statistics', statistics);
 app.use('/tarjetas', tarjetas);
 

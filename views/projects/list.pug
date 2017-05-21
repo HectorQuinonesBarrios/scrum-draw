@@ -5,16 +5,16 @@ block content
   .container
     .row
       .col-xs-12.col-sm-offset-2.col-sm-8(class='[ ]')
-        a.btn.btn-success.btn-large.glyphicon.glyphicon-plus(href="/new_project")
+        a.btn.btn-success.btn-large.glyphicon.glyphicon-plus(href="/projects/new")
         ul.event-list
           each proyecto in proyectos
             li
-              time(datetime='2014-07-20')
-                p= proyecto.fecha_solicitud
-                p= proyecto.fecha_arranque
-                p= proyecto.product_owner
-                p= proyecto.scrum_master
+              time
+                p= moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")
+                p= moment(proyecto.fecha_arranque).format("DD-MM-YYYY")
               .info
                 h2.title= proyecto.nombre
+                p.desc Product Owner: #{proyecto.product_owner}
+                p.desc SCRUM Master: #{proyecto.scrum_master}
                 p.desc= proyecto.descripcion
-                a(href="/statistics") Ver estadísticas
+                a(href=`/projects/${proyecto._id}/statistics`) Ver estadísticas

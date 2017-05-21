@@ -61,6 +61,6 @@ typings/
 /src/**/*.html
 
 # Riot components
-public/abilities-list/*.js
+public/list-selector/*.js
 public/new-card/*.js
 
