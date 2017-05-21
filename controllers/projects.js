@@ -1,8 +1,51 @@
 'use strict'
 const express = require('express'),
-      moment = require('moment'),
       Proyecto = require('../models/proyecto'),
-      Usuario = require('../models/usuario');
+      Usuario = require('../models/usuario'),
+      log4js = require('log4js'),
+      logger = log4js.getLogger();
+
+function blank(req, res, next) {
+
+  Usuario.find({}, {'local.nombre': 1, 'local.email': 1}, (err, usuarios) => {
+    usuarios = usuarios || {};
+    res.render('projects/blank.pug', { usuarios });
+  });
+}
+
+function crear(req, res, next) {
+  logger.debug("Crear Proyecto");
+	console.log(req.body);
+  let proyecto = new Proyecto({
+    nombre: req.body.nombre,
+  	fecha_solicitud: req.body.fecha_solicitud,
+  	fecha_arranque: req.body.fecha_arranque,
+  	descripcion: req.body.descripcion,
+  	scrum_master: req.body.scrum_master,
+  	product_owner: req.body.product_owner,
+		equipo_desarrollo: JSON.parse(req.body.equipo_desarrollo)
+
+  });
+
+	proyecto.save((err, object)=>{
+		let code;
+		let message;
+		if(err){
+		  code = 'danger';
+		  message = 'No se ha podido crear el proyecto.';
+      logger.debug(err);
+		}else{
+		  code = 'success';
+		  message = 'Proyecto creado correctamente.';
+		}
+
+		res.locals.status = {
+		  code,
+		  message
+		};
+		next();
+	});
+}
 
 function list (req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
@@ -11,14 +54,14 @@ function list (req, res, next) {
 		if (err) {
 			throw err;
 		} else
-      //proyectos.fecha_solicitud = moment(proyectos.fecha_solicitud).format('DD-MM-YYYY');
-      //proyectos.fecha_arranque = moment(proyectos.fecha_arranque).format('DD-MM-YYYY');
       console.log(proyectos);
 			res.render('projects/list.pug', {proyectos, usuario});
 	});
   });
 }
 
-module.exports = {
-  list
+module.exports = exports = {
+    list,
+    blank,
+    crear
 }

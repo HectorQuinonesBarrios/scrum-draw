@@ -5,7 +5,7 @@ block content
     h1.well Nuevo proyecto
     .col-lg-12.well
       .row
-        form(name='new_project', id='new_project', method='POST', action='/new_project/')
+        form(name='new_project', method='POST', action='/projects/new')
           .col-sm-12
             .row
               .col-sm-6.form-group
@@ -27,14 +27,26 @@ block content
               .col-sm-6.form-group
                 label Administrador del Proyecto (Scrum Master)
                 |
-                input.form-control(type='text', placeholder='Usuario..', name='scrum_master')
+                select.selectpicker.show-tick(data-live-search="true" name='scrum_master')
+                    each usuario in usuarios
+                        option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
               .col-sm-6.form-group
                 label Dueño del producto (Product Owner)
                 |
-                input.form-control(type='text', placeholder='Usuario..', name='product_owner')
+                select.selectpicker.show-tick(data-live-search="true" name='product_owner')
+                    each usuario in usuarios
+                        option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
             .row
               .col-sm-6.form-group
                 label Equipo de Desarrollo
                 |
-                input.form-control(type='text', placeholder='Usuario(s)..', name='equipo_desarrollo')
+                list-selector
+                    yield(to='input')
+                        select.selectpicker.show-tick(data-live-search="true" ref='input')
+                            each usuario in usuarios
+                                option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
             button.btn.btn-lg.btn-info(type='submit') Crear
+    script(src='/riot/riot.min.js')
+    script(src='/list-selector/list-selector.js')
+    script.
+        riot.mount('list-selector', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol']})

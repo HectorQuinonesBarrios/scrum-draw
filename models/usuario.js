@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UsuarioSchema = Schema({
-	local:{
+	local: {
 		nombre: String,
 		password: String,
 		email: {
@@ -19,27 +19,26 @@ const UsuarioSchema = Schema({
 		habilidades: [{nombre: String, rank: String}]
 	},
 	facebook: {
-		facebookID: {
-            type: String,
-            unique: true
+        type: {
+            facebookID: String,
+            token: String
         },
-		token: String
+        sparse: true
 	},
 	twitter: {
-		twitterID: {
-            type: String,
-            unique: true
+        type: {
+            twitterID: String,
+            token: String
         },
-		token: String
+        sparse: true
 	},
 	github: {
-		githubID: {
-            type: String,
-            unique: true
+        type: {
+            githubID: String,
+            token: String
         },
-		token: String
-	}
-
+        sparse: true
+    }
 });
 
 module.exports = exports = mongoose.model('Usuario', UsuarioSchema);
