@@ -105,8 +105,8 @@ function crear(req, res, next) {
                             github: {
                               type:{
                                 githubID: req.body.id
-                              }
                             }
+                          }
 
                         });
                         break;
