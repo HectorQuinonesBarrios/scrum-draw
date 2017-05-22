@@ -20,18 +20,7 @@ module.exports = () => {
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({'facebook.facebookID': profile.id}, (err, usuario)=>{
-              if(err) done(err);
-              else {
-                if(usuario){
-                  logger.debug(usuario);
-                  done(null, usuario);
-                } else {
-                  logger.debug(profile);
-                  done(null, profile);
-                }
-              }
-            });
+            done(null, profile);
         }
     ));
 
@@ -45,18 +34,7 @@ module.exports = () => {
         },
         function(token, tokenSecret, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({'twitter.twitterID': profile.id}, (err, usuario)=>{
-              if(err) done(err);
-              else {
-                if(usuario){
-                  logger.debug(usuario);
-                  done(null, usuario);
-                } else {
-                  logger.debug(profile);
-                  done(null, profile);
-                }
-              }
-            });
+            done(null, profile);
         }
     ));
 
@@ -70,18 +48,7 @@ module.exports = () => {
         },
         function(accessToken, refreshToken, profile, done) {
             logger.debug(profile);
-            Usuario.findOne({'github.githubID': profile.id}, (err, usuario)=>{
-              if(err) done(err);
-              else {
-                if(usuario){
-                  logger.debug(usuario);
-                  done(null, usuario);
-                } else {
-                  logger.debug(profile);
-                  done(null, profile);
-                }
-              }
-            });
+            done(null, profile);
         }
     ));
 }

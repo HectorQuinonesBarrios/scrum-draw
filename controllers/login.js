@@ -38,8 +38,8 @@ function login(req, res, next) {
 
 function facebook(req, res, next){
   logger.debug('FB LOGIN');
-  logger.debug(req.user.id, req.user.emails[0].value, req.user.name.givenName + req.user.name.familyName );
-  Usuario.findOne({facebook: {facebookID: req.user.id}}, (err, usuario)=>{
+  logger.debug(req.user );
+  Usuario.findOne({'facebook.type.facebookID': req.user.id}, (err, usuario)=>{
     if(err) res.redirect('/');
     else {
       if(usuario){
@@ -63,7 +63,7 @@ function facebook(req, res, next){
 function twitter(req, res, next){
   logger.debug('TW LOGIN');
   logger.debug(req.user);
-  Usuario.findOne({twitter: {twitterID: req.user.id}}, (err, usuario)=>{
+  Usuario.findOne({'twitter.type.twitterID': req.user.id}, (err, usuario)=>{
     if(err) res.redirect('/');
     else {
       if(usuario){
@@ -88,7 +88,7 @@ function twitter(req, res, next){
 function github(req, res, next){
   logger.debug('GH LOGIN');
   logger.debug(req.user);
-  Usuario.findOne({github: {githubID: req.user.id}}, (err, usuario)=>{
+  Usuario.findOne({'github.type.githubID': req.user.id}, (err, usuario)=>{
     if(err) res.redirect('/');
     else {
       if(usuario){

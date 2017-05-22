@@ -62,7 +62,10 @@ function crear(req, res, next) {
                                 habilidades: JSON.parse(req.body.habilidades)
                             },
                             facebook: {
+                              type: {
                                 facebookID: req.body.id
+                              }
+
                             }
 
                         });
@@ -80,7 +83,10 @@ function crear(req, res, next) {
                                 habilidades: JSON.parse(req.body.habilidades)
                             },
                             twitter: {
+                              type: {
                                 twitterID: req.body.id
+                              }
+
                             }
                           });
                         break;
@@ -97,7 +103,9 @@ function crear(req, res, next) {
                                 habilidades: JSON.parse(req.body.habilidades)
                             },
                             github: {
+                              type:{
                                 githubID: req.body.id
+                              }
                             }
 
                         });
