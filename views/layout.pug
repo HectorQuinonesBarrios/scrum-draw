@@ -58,9 +58,6 @@ html
                     li
                       form(action='/logout' method='POST')
                         button(type='submit' class='btn btn-link') Logout
-                    li.divider(role='separator')
-                    li
-                      a(href='#') Separated link
 
     if(status != undefined)
       div(class=`alert alert-${status.code}`) #{status.message}
