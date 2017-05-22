@@ -1,0 +1,44 @@
+.col-sm-12
+  .row
+    .col-sm-6.form-group
+      label Nombre del proyecto
+      |
+      input.form-control(type='text', placeholder='Nombre..', name='nombre' value=`${proyecto.nombre}`)
+    .col-sm-6.form-group
+      label Descripción
+      |
+      textarea.form-control(placeholder='Descripción..', rows='3', name='descripcion') #{proyecto.descripcion}
+  .row
+    .col-sm-6.form-group
+      label Fecha de solicitud
+      input.form-control(type='date', name='fecha_solicitud' value=moment(proyecto.fecha_solicitud).format('DD-MM-YYYY'))
+    .col-sm-6.form-group
+      label Fecha de arranque
+      input.form-control(type='date', name='fecha_arranque' value=moment(proyecto.fecha_arranque).format('DD-MM-YYYY'))
+  .row
+    .col-sm-6.form-group
+      label Administrador del Proyecto (Scrum Master)
+      |
+      select.selectpicker.show-tick(data-live-search="true" name='scrum_master')
+          each usuario in usuarios
+              option(data-tokens=`${usuario.local.nombre} ${usuario.local.email} ${usuario._id}` value=`${usuario._id}` selected=proyecto.scrum_master == usuario._id? true:false)= usuario.local.nombre
+    .col-sm-6.form-group
+      label Dueño del producto (Product Owner)
+      |
+      select.selectpicker.show-tick(data-live-search="true" name='product_owner')
+          each usuario in usuarios
+              option(data-tokens=`${usuario.local.nombre} ${usuario.local.email} ${usuario._id}` value=`${usuario._id}` selected=proyecto.product_owner == usuario._id? true:false)= usuario.local.nombre
+  .row
+    .col-sm-6.form-group
+      label Equipo de Desarrollo
+      |
+      list-selector
+          yield(to='input')
+              select.selectpicker.show-tick(data-live-search="true" ref='input')
+                  each usuario in usuarios
+                      option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
+  button.btn.btn-lg.btn-info(type='submit') Aceptar
+script(src='/riot/riot.min.js')
+script(src='/list-selector/list-selector.js')
+script.
+    riot.mount('list-selector', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol'], items: !{JSON.stringify(proyecto.equipo_desarrollo) || []}})

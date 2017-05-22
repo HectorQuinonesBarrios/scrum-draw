@@ -14,14 +14,78 @@ function blank(req, res, next) {
     } else {
       Usuario.find({}, {'local.nombre': 1, 'local.email': 1}, (err, usuarios) => {
         usuarios = usuarios || {};
-        res.render('projects/blank.pug', { usuario, usuarios });
+        let proyecto = {
+          nombre: '',
+          fecha_solicitud: '',
+          fecha_arranque: '',
+          descripcion: '',
+          scrum_master: '',
+          product_owner: '',
+          equipo_desarrollo: []
+        }
+        res.render('projects/blank.pug', { usuario, usuarios, proyecto, moment });
       });
     }
   });
 }
 
+function actualizar(req, res, next) {
+    Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+        if (!usuario) {
+            res.render('login/login_form');
+        } else {
+            let code,
+                message;
+            Proyecto.update({_id: req.params.id}, {
+              $set: {
+                nombre: req.body.nombre,
+                fecha_solicitud: req.body.fecha_solicitud,
+                fecha_arranque: req.body.fecha_arranque,
+                descripcion: req.body.descripcion,
+                scrum_master: req.body.scrum_master,
+                product_owner: req.body.product_owner,
+                equipo_desarrollo: JSON.parse(req.body.equipo_desarrollo)
+              }
+            }, (err, res) => {
+              if (err) {
+                code = 'danger';
+                message = 'No se ha podido editar el proyecto.';
+                logger.debug(err);
+              } else {
+                code = 'success';
+                message = 'Proyecto editado correctamente.';
+              }
+              res.locals.status = {
+                code,
+                message
+              };
+              next();
+            });
+        }
+    });
+}
+
+function editar(req, res, next) {
+    Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+        if (!usuario) {
+            res.render('login/login_form');
+        } else {
+            Usuario.find({}, {'local.nombre': 1, 'local.email': 1}, (err, usuarios) => {
+                usuarios = usuarios || [];
+                Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
+                    if (error) {
+                        logger.debug(error);
+                    } else {
+                        res.render('projects/edit.pug', { usuario, usuarios, proyecto, moment });
+                    }
+                });
+            });
+        }
+    });
+}
+
 function crear(req, res, next) {
-    logger.debug("Crear Proyecto");
+    logger.debug('Crear Proyecto');
     let proyecto = new Proyecto({
       nombre: req.body.nombre,
       fecha_solicitud: req.body.fecha_solicitud,
@@ -89,22 +153,16 @@ function list(req, res, next) {
               console.log(err);
               throw err;
           }
-            console.log(proyectos);
             res.render('projects/list.pug', {proyectos, usuario, moment});
         });
     }
-//    Proyecto.find({}, (err, proyectos) => {
-//		if (err) {
-//			throw err;
-//		} else
-//      console.log(proyectos);
-//      res.render('projects/list.pug', {proyectos, usuario, moment});
-//	});
   });
 }
 
 module.exports = exports = {
-    list,
-    blank,
-    crear
+  list,
+  blank,
+  crear,
+  editar,
+  actualizar
 }
