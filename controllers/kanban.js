@@ -8,11 +8,13 @@ const express = require('express'),
 
 function kanban(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
-    usuario = usuario || {};
-    Tarjeta.find((err, tarjetas)=>{
-        res.render('kanban/kanban.pug', { usuario, tarjetas });
-    });
-
+    if(!usuario) {
+      res.render('login/login_form');
+    } else {
+      Tarjeta.find((err, tarjetas)=>{
+          res.render('kanban/kanban.pug', { usuario, tarjetas });
+      });
+    }
   });
 }
 
