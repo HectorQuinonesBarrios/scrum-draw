@@ -6,7 +6,13 @@ const express = require('express'),
       logger = log4js.getLogger();
 
 function login_form(req, res, next) {
-  res.render('login/login_form');
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    if (!usuario) {
+        res.render('login/login_form');
+    } else {
+      res.redirect('/');
+    }
+  });
 }
 
 function login(req, res, next) {
