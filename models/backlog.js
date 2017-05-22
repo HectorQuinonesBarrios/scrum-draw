@@ -6,8 +6,7 @@ const mongoose = require('mongoose'),
 
 const BacklogSchema = Schema({
 	tipo: String,
-	proyecto_id: ObjectId,
-	tarjetas: [Object]
+	proyecto_id: ObjectId
 });
 
 module.exports = exports = mongoose.model('Backlog', BacklogSchema);

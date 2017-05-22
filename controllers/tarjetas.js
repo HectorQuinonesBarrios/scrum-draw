@@ -4,7 +4,7 @@ const Tarjeta = require('../models/tarjeta');
 const log4js = require('log4js');
 const logger = log4js.getLogger();
 
-function  crearTarjeta(req, res, next){
+function crear(req, res, next){
   logger.debug('Crear Tarjeta');
   let tarjeta = new Tarjeta ({
     valor: req.body.valor,
@@ -17,7 +17,9 @@ function  crearTarjeta(req, res, next){
   		dado: req.body.dado,
   		cuando: req.body.cuando,
   		entonces: req.body.entonces
-  	}/*,
+  	},
+    backlog: req.body.backlog
+    /*,
   	validada: req.body.validada,
   	terminado: req.body.terminado
     ,asignados: [{usuario_id: req.body.asignados}]*/
@@ -25,18 +27,18 @@ function  crearTarjeta(req, res, next){
 
 tarjeta.save((err,object)=>{
   if(err){
-    res.redirect('/kanban');
+    res.redirect(`/kanban/${req.body.proyecto}`);
   }
   else{
     //TODO
-    res.redirect('/kanban');
+    res.redirect(`/kanban/${req.body.proyecto}`);
   }
 
 });
 
 }
 
-function verTarjeta(req, res, next){
+function ver(req, res, next){
   logger.debug('Ver Tarjeta');
   Tarjeta.findOne({_id: req.params.id}, (err, tarjeta)=>{
     if(err){
@@ -48,7 +50,7 @@ function verTarjeta(req, res, next){
   });
 }
 
-function actualizarTarjeta(req, res, next){
+function actualizar(req, res, next){
   logger.debug('Actualizar Tarjeta');
   let tarjeta = {
     valor: req.body.valor,
@@ -56,7 +58,8 @@ function actualizarTarjeta(req, res, next){
   	criterios: req.body.criterios,
   	validada: req.body.validada,
   	terminado: req.body.terminado,
-  	asignados: [{usuario_id: req.body.asignados}]
+  	asignados: [{usuario_id: req.body.asignados}],
+    backlog: req.body.backlog_id
   };
 
 Tarjeta.update({_id:req.params.id}, {$set: tarjeta}, (err,tarjeta)=>{
@@ -69,7 +72,7 @@ Tarjeta.update({_id:req.params.id}, {$set: tarjeta}, (err,tarjeta)=>{
   });
 
 }
-function borrarTarjeta(req,res,next){
+function borrar(req,res,next){
   logger.debug('Borrar Tarjeta');
   Tarjeta.remove({_id: req.body.id}, (err, tarjeta)=>{
     if(err){
@@ -82,8 +85,8 @@ function borrarTarjeta(req,res,next){
 
 
 module.exports = {
-  crearTarjeta,
-  verTarjeta,
-  actualizarTarjeta,
-  borrarTarjeta
+  crear,
+  ver,
+  actualizar,
+  borrar
 }

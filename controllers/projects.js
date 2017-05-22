@@ -110,8 +110,7 @@ function crear(req, res, next) {
 		}else{
           let backlog = new Backlog({
               tipo: 'Product Backlog',
-              proyecto_id: proyecto._id,
-              tarjetas: []
+              proyecto_id: proyecto._id
             });
           backlog.save((error, object)=>{
             if(error || !object){
@@ -150,7 +149,7 @@ function list(req, res, next) {
             {$group: {_id: '$_id', nombre: {$first: '$nombre'}, fecha_solicitud: {$first: '$fecha_solicitud'}, fecha_arranque: {$first: '$fecha_arranque'}, descripcion: {$first: '$descripcion'}, scrum_master: {$first: '$scrum_master_doc'}, product_owner: {$first: '$product_owner_doc'}, equipo_desarrollo: {$push: '$equipo_desarrollo_docs'}}}
         ],(err, proyectos) => {
           if (err) {
-              console.log(err);
+              logger.debug(err);
               throw err;
           }
             res.render('projects/list.pug', {proyectos, usuario, moment});
