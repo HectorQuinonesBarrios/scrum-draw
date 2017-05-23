@@ -5,18 +5,14 @@ block append head
 block content
     .wrapper
       form.form-signin(action='/login' method='POST')
-        h2.form-signin-heading Please login
+        h2.form-signin-heading Iniciar Sesión
         |
         input.form-control(type='email', name='email', placeholder='Email Address', required='required', autofocus='autofocus')
         |
         input.form-control(type='password', name='password', placeholder='Password', required='required')
         |
-        label.checkbox
-          input#rememberMe(type='checkbox', value='remember-me', name='rememberMe')
-          |  Remember me
-        |
 
-        button(class='btn btn-lg btn-primary btn-block' type='submit') Login
+        button(class='btn btn-lg btn-primary btn-block' type='submit') Entrar
         a(class='btn btn-block btn-social btn-facebook' href="/login/auth/facebook")
           span(class='fa fa-facebook')
           | Inicio con facebook
