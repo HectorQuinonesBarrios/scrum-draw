@@ -25,10 +25,7 @@ function blank(req, res, next) {
         else if (!usuario) res.render('users/blank', {
             usuario: usr
         });
-        else res.render('index', {
-            usuario,
-            status: res.locals.status
-        });
+        else res.redirect('/');
     });
 }
 

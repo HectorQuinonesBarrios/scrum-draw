@@ -17,8 +17,9 @@ const TarjetaSchema = Schema({
 		entonces: String
 	},
 	validada: Boolean,
-	terminado: Boolean
+	terminado: Boolean,
 	//, asignados: [{usuario_id: ObjectId}]
+    backlog: ObjectId
 });
 
 module.exports = exports = mongoose.model('Tarjeta', TarjetaSchema);

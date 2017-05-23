@@ -1,0 +1,9 @@
+extends ../layout
+block append head
+block content
+  .container
+    h1.well Editar proyecto
+    .col-lg-12.well
+      .row
+        form(name='edit_project', method='POST', action=`/projects/${proyecto._id}/edit?_method=PUT`)
+          include project-form.pug

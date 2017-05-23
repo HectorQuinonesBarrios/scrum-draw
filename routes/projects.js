@@ -7,6 +7,10 @@ router.get('/', projectsController.list);
 
 router.get('/new', projectsController.blank);
 
+router.get('/:id/edit', projectsController.editar);
+
+router.put('/:id/edit', projectsController.actualizar);
+
 router.post('/new', projectsController.crear);
 
 router.use('/new', projectsController.blank);

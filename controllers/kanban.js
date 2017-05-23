@@ -3,32 +3,47 @@ const express = require('express'),
       Backlog = require('../models/backlog'),
       Usuario = require('../models/usuario'),
       Tarjeta = require('../models/tarjeta'),
+      Proyecto = require('../models/proyecto'),
       log4js = require('log4js'),
       logger = log4js.getLogger();
 
 function kanban(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
-    usuario = usuario || {};
-    Tarjeta.find((err, tarjetas)=>{
-        res.render('kanban/kanban.pug', { usuario, tarjetas });
-    });
-
+    if(!usuario) {
+      res.render('login/login_form');
+    } else {
+      Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
+        if (err) {
+          logger.debug(error);
+        } else {
+          logger.debug(proyecto);
+          Backlog.aggregate([
+            {$match: {'proyecto_id': proyecto._id}},
+            {$lookup: {from: 'tarjetas', localField: '_id', foreignField: 'backlog', as: 'tarjetas'}}
+          ], (err, backlogs) => {
+              if (err) {
+                logger.debug(err);
+              } else {
+                logger.debug(backlogs);
+                res.render('kanban/kanban.pug', { usuario, backlogs, proyecto });
+              }
+          });
+        }
+      });
+    }
   });
 }
 
 function crear(req, res, next){
-  let backlog = new BacklogSchema ({
+  let backlog = new Backlog({
     tipo: req.body.tipo,
-  	proyecto_id: req.body.proyecto_id,
-  	Backlogs: [req.body.Backlogs]
+  	proyecto_id: req.params.id
   });
-  Backlog.save((err,object)=>{
+  backlog.save((err, object)=>{
     if(err){
       //TODO
-
       throw err;
     }else {
-      //TODO
       next();
     }
   });
@@ -49,15 +64,9 @@ function ver(req, res, next){
 function actualizar(req,res,next){
   logger.debug('Actualizar Backlog');
   let backlog = {
-    valor: req.body.valor,
-  	narrativa: req.body.narrativa,
-  	criterios: req.body.criterios,
-  	validada: req.body.validada,
-  	terminado: req.body.terminado,
-  	asignados: [{usuario_id: req.body.asignados}]
+    tipo: req.body.tipo
   };
-  Backlog.update({_id:req.params.id},{$set:backlog},(err,backlog)=>{
-
+  Backlog.update({_id: req.params.id}, {$set: backlog}, (err, backlog)=>{
     if(err){
       throw err;
     }else {
@@ -68,7 +77,7 @@ function actualizar(req,res,next){
 }
 function borrar(req,res,next){
   logger.debug('Borrar Backlog');
-  Backlog.remove({_id:req.params.id},(err,backlog)=>{
+  Backlog.remove({_id: req.body.backlog_id}, (err, backlog)=>{
     if(err){
       throw err;
     }else {

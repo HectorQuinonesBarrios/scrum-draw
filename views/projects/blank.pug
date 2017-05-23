@@ -6,47 +6,4 @@ block content
     .col-lg-12.well
       .row
         form(name='new_project', method='POST', action='/projects/new')
-          .col-sm-12
-            .row
-              .col-sm-6.form-group
-                label Nombre del proyecto
-                |
-                input.form-control(type='text', placeholder='Nombre..', name='nombre')
-              .col-sm-6.form-group
-                label Descripción
-                |
-                textarea.form-control(placeholder='Descripción..', rows='3', name='descripcion')
-            .row
-              .col-sm-6.form-group
-                label Fecha de solicitud
-                input.form-control(type='date', name='fecha_solicitud')
-              .col-sm-6.form-group
-                label Fecha de arranque
-                input.form-control(type='date', name='fecha_arranque')
-            .row
-              .col-sm-6.form-group
-                label Administrador del Proyecto (Scrum Master)
-                |
-                select.selectpicker.show-tick(data-live-search="true" name='scrum_master')
-                    each usuario in usuarios
-                        option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
-              .col-sm-6.form-group
-                label Dueño del producto (Product Owner)
-                |
-                select.selectpicker.show-tick(data-live-search="true" name='product_owner')
-                    each usuario in usuarios
-                        option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
-            .row
-              .col-sm-6.form-group
-                label Equipo de Desarrollo
-                |
-                list-selector
-                    yield(to='input')
-                        select.selectpicker.show-tick(data-live-search="true" ref='input')
-                            each usuario in usuarios
-                                option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
-            button.btn.btn-lg.btn-info(type='submit') Crear
-    script(src='/riot/riot.min.js')
-    script(src='/list-selector/list-selector.js')
-    script.
-        riot.mount('list-selector', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol']})
+          include project-form.pug

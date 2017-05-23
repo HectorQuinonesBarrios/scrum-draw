@@ -1,0 +1,16 @@
+#BacklogModal.modal.fade(role='dialog')
+    .modal-dialog
+      // Modal content
+      .modal-content
+        form(name='add-backlog' method='POST' action=`/kanban/${proyecto._id}`)
+          .modal-header
+            button.close(type='button' data-dismiss='modal') ×
+            h4.modal-title Agregar backlog
+          .modal-body
+            .row
+              .col-sm-12.form-group
+                input.form-control(name='tipo' required='required' type='text' placeholder='Nombre del Backlog')
+          .modal-footer
+            .row
+                button.btn.btn-default(type='submit') Agregar
+                button.btn.btn-info(type='button' data-dismiss='modal') Cerrar

@@ -1,89 +1,41 @@
 extends ../layout
 
 block append head
-  link(rel='stylesheet', href='/stylesheets/kanban.css')
+  link(rel='stylesheet' href='/stylesheets/kanban.css')
 
 block content
-  // Modal
-  #myModal.modal.fade(role='dialog')
-    .modal-dialog
-      // Modal content
-      .modal-content
-        form(name='crear', id='form-add-card', method='POST', action='/tarjetas')
-          .modal-header
-            button.close(type='button', data-dismiss='modal') ×
-            h4.modal-title Agregar tarjeta
-          .modal-body
-            .row
-              .col-sm-12.form-group
-                h5.modal-title Narrativa de la historia
-                input.form-control(name='como' required='required' type='text' placeholder='Como')
-                br
-                input.form-control(name='quiero' required='required' type='text' placeholder='Quiero')
-                br
-                input.form-control(name='manera' required='required' type='text' placeholder='De tal manera')
-                br
-                h5.modal-title  Criterios de aceptacion
-                input.form-control(name='dado' required='required' type='text' placeholder='Dado')
-                br
-                input.form-control(name='cuando' required='required' type='text' placeholder='Cuando')
-                br
-                input.form-control(name='entonces' required='required' type='text' placeholder='Entonces')
-              
-          .modal-footer
-            .col-sm-2
-              label Valor 
-              select(name="valor")
-                option(value=1) 1
-                option(value=2) 2
-                option(value=3) 3
-                option(value=5) 5
-                option(value=8) 8
-            button.btn.btn-default(type='submit') Agregar
-            button.btn.btn-info(type='button' data-dismiss='modal') Cerrar
+  // Modals
+  include new-backlog.pug
+  include new-card.pug
 
   .container-fluid
+  button.btn.btn-info.btn-sm(type='button' data-toggle='modal' data-target='#BacklogModal')
+    i.fa.fa-plus
   #sortableKanbanBoards.row
-    .panel.panel-primary.kanban-col
-      .panel-heading
-        | Product backlog
-        i.fa.fa-2x.fa-plus-circle.pull-right
-      .panel-body
-        #TODO.kanban-centered
-          each tarjeta in tarjetas
-            article#item6.kanban-entry.grab(draggable='true')
-              .kanban-entry-inner
-                .kanban-label
-                  h2="Tarea con valor de " + tarjeta.valor
-                    
-                  p="Como : " + tarjeta.narrativa.como
-                  p="Quiere : " + tarjeta.narrativa.quiero
-                  p="De Manera Que : " + tarjeta.narrativa.manera
-                    
-                  p="Dado : " + tarjeta.criterios.dado
-                  p="Cuando : " + tarjeta.criterios.cuando
-                  p="Entonces : " + tarjeta.criterios.entonces
-      .panel-footer
-        button.btn.btn-info.btn-sm(type='button', data-toggle='modal', data-target='#myModal') Agregar tarjeta
-    .panel.panel-primary.kanban-col
-      .panel-heading
-        | Release backlog
-        i.fa.fa-2x.fa-plus-circle.pull-right
-      .panel-body
-        #DOING.kanban-centered
+    each backlog in backlogs
+      .panel.panel-primary.kanban-col
+        .panel-heading
+          | #{backlog.tipo}
+          i.fa.fa-2x.fa-plus-circle.pull-right
+        .panel-body
+          .kanban-centered(id=backlog._id)
+            each tarjeta in backlog.tarjetas
+              article#item6.kanban-entry.grab(draggable='true')
+                .kanban-entry-inner
+                  .kanban-label
+                    h2="Tarea con valor de " + tarjeta.valor
 
-      .panel-footer
-        //a(href='#') Add a card...
-    .panel.panel-primary.kanban-col
-      .panel-heading
-        | Sprint backlog
-        i.fa.fa-2x.fa-plus-circle.pull-right
-      .panel-body
-        #DONE.kanban-centered
+                    p="Como : " + tarjeta.narrativa.como
+                    p="Quiere : " + tarjeta.narrativa.quiero
+                    p="De Manera Que : " + tarjeta.narrativa.manera
 
-      .panel-footer
-        //a(href='#') Add a card...
-  #processing-modal.modal.modal-static.fade(role='dialog', aria-hidden='true')
+                    p="Dado : " + tarjeta.criterios.dado
+                    p="Cuando : " + tarjeta.criterios.cuando
+                    p="Entonces : " + tarjeta.criterios.entonces
+        .panel-footer
+          button.btn.btn-info.btn-sm(type='button' data-toggle='modal' data-target='#CardModal' data-backlog=backlog._id) Agregar tarjeta
+
+  #processing-modal.modal.modal-static.fade(role='dialog' aria-hidden='true')
     .modal-dialog=''
       .modal-content
         .modal-body
@@ -91,6 +43,14 @@ block content
             i.fa.fa-refresh.fa-5x.fa-spin
             h4 Processing...
 block append script
+  
   script(src='/javascripts/kanban/kanban.js' type='text/javascript')
   script(src='/socket.io/socket.io.js' type='text/javascript')
   script(src='/javascripts/kanban/kanbanSocket.js' type='text/javascript')
+  script.
+      $('#CardModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var backlogId = button.data('backlog');
+        var modal = $(this);
+        modal.find('.modal-body input[name=backlog]').val(backlogId);
+      });

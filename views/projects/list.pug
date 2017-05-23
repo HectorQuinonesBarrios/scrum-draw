@@ -10,11 +10,14 @@ block content
           each proyecto in proyectos
             li
               time
-                p= moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")
-                p= moment(proyecto.fecha_arranque).format("DD-MM-YYYY")
+                p  Fecha de solicitud #{moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")}
+                p  Fecha de arranque #{moment(proyecto.fecha_arranque).format("DD-MM-YYYY")}
               .info
-                h2.title= proyecto.nombre
-                p.desc Product Owner: #{proyecto.product_owner}
-                p.desc SCRUM Master: #{proyecto.scrum_master}
+                h2.title
+                  a(href=`/kanban/${proyecto._id}`)= proyecto.nombre
+                p.desc Product Owner: #{proyecto.product_owner.local.nombre}
+                p.desc SCRUM Master: #{proyecto.scrum_master.local.nombre}
                 p.desc= proyecto.descripcion
-                a(href=`/projects/${proyecto._id}/statistics`) Ver estadísticas
+                a(href=`/statistics/${proyecto._id}`) Ver estadísticas
+                | -
+                a(href=`/projects/${proyecto._id}/edit`) Editar
