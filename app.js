@@ -1,14 +1,15 @@
 const express = require('express')
 , path = require('path')
 , favicon = require('serve-favicon')
-, logger = require('morgan')
+, morgan = require('morgan')
 , cookieParser = require('cookie-parser')
 , bodyParser = require('body-parser')
 , session = require('express-session')
 , passport = require('passport')
 , methodOverride = require('method-override')
 , Usuario = require('./models/usuario')
-
+, log4js = require('log4js')
+, logger = log4js.getLogger()
 , index = require('./routes/index')
 , users = require('./routes/usuarios')
 , login = require('./routes/login')
@@ -19,6 +20,8 @@ const express = require('express')
 , tarjetas = require('./routes/tarjetas');
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const auth = require('./routes/login');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +29,7 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
@@ -39,7 +42,12 @@ app.use(session({
 app.use('/auth', auth);
 require('./auth')(passport);
 app.use(passport.initialize());
-
+app.use((req, res, next)=>{
+  req.io = io;
+  res.io = io;
+  
+  next();
+});
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
@@ -47,6 +55,8 @@ passport.deserializeUser(function (id, done) {
     var user = USERS[id];
     done(null, user);
 });
+
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
@@ -81,4 +91,4 @@ app.use(function(err, req, res, next) {
   // render the error page
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};

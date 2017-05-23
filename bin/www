@@ -4,13 +4,11 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
 var debug = require('debug')('scrum-draw:server');
 var http = require('http');
 var mongoose = require('mongoose');
 var log4js = require('log4js');
-
-
 var logger = log4js.getLogger();
 
 /**
@@ -24,7 +22,9 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = require('../app').server;
+
+
 
 /**
  * Listen on provided port, on all network interfaces.
