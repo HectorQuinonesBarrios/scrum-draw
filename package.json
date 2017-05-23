@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "run-p riot-compile server",
+    "start": "node bin/www",
+    "start2": "run-p riot-compile server",
     "server": "supervisor ./bin/www",
     "riot-compile": "riot -w --template pug views public"
   },

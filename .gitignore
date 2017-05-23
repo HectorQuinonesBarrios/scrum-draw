@@ -60,7 +60,3 @@ typings/
 #pug
 /src/**/*.html
 
-# Riot components
-public/list-selector/*.js
-public/new-card/*.js
-
