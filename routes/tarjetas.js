@@ -6,6 +6,6 @@ router.post('/', tarjetasController.crear);
 
 router.put('/', tarjetasController.actualizar);
 
-router.delete('/', tarjetasController.borrar);
+router.delete('/:id', tarjetasController.borrar);
 
 module.exports = router;

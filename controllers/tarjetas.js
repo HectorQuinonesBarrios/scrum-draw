@@ -69,7 +69,7 @@ Tarjeta.update({_id: req.body.id}, {$set: tarjeta}, (err,tarjeta)=>{
       throw err;
     }else {
       res.io.emit('backlogs', tarjeta);
-      res.status(200).send('ok');
+      res.sendStatus(200);
     }
   });
 }
@@ -80,7 +80,8 @@ function borrar(req,res,next){
     if(err){
       throw err;
     }else {
-      next();
+      res.io.emit('backlogs', tarjeta);
+      res.sendStatus(200);
     }
   });
 }
