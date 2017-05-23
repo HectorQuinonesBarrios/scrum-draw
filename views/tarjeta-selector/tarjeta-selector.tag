@@ -28,17 +28,16 @@ tarjeta-selector
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
     let self = this
-    this.socket = io('http://localhost:3000', {forceNew: true})
+    this.socket = io('http://localhost:3000')
     let xhttp = new XMLHttpRequest()
     this.socket.on('backlogs', (backlog)=>{
       console.log('conectado');
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            console.log(xhttp.responseText);
-           self.update({backlogs: JSON.stringify(xhttp.responseText)})
-
+           self.update({backlogs: JSON.parse(xhttp.responseText)});
         }
       };
-      xhttp.open('GET', '/backlogs/'+this.proyecto._id, true);
+      xhttp.open('GET', '/kanban/backlogs/'+this.proyecto._id, true);
       xhttp.send();
     });
