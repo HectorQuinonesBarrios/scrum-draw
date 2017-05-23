@@ -29,7 +29,7 @@ var server = require('../app').server;
 /**
  * Listen on provided port, on all network interfaces.
  */
-mongoose.connect('mongodb://localhost:27017/scrum_draw', (err, res)=>{
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/scrum_draw', (err, res)=>{
   if(err){
     logger.error("No se pudo extablecer una conexion con el servicio de mongoDB.");
     throw err;
