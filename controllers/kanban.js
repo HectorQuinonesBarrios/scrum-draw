@@ -34,6 +34,32 @@ function kanban(req, res, next) {
   });
 }
 
+function backlogs(req, res, next) {
+  Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    if(!usuario) {
+      res.render('login/login_form');
+    } else {
+      Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
+        if (err) {
+          logger.debug(error);
+        } else {
+          logger.debug(proyecto);
+          Backlog.aggregate([
+            {$match: {'proyecto_id': proyecto._id}},
+            {$lookup: {from: 'tarjetas', localField: '_id', foreignField: 'backlog', as: 'tarjetas'}}
+          ], (err, backlogs) => {
+              if (err) {
+                logger.debug(err);
+              } else {
+                res.status(200).json(backlogs);
+              }
+          });
+        }
+      });
+    }
+  });
+}
+
 function crear(req, res, next){
   let backlog = new Backlog({
     tipo: req.body.tipo,
@@ -90,5 +116,6 @@ module.exports = {
   crear,
   ver,
   actualizar,
-  borrar
+  borrar,
+  backlogs
 }
