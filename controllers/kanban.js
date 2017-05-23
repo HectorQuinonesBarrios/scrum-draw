@@ -65,11 +65,13 @@ function crear(req, res, next){
     tipo: req.body.tipo,
   	proyecto_id: req.params.id
   });
+  logger.info('CREAR');
   backlog.save((err, object)=>{
     if(err){
       //TODO
       throw err;
     }else {
+      res.io.emit('backlogs', object);
       next();
     }
   });
