@@ -9,6 +9,8 @@ router.get('/new', projectsController.blank);
 
 router.get('/:id/edit', projectsController.editar);
 
+router.get('/socket', projectsController.socket);
+
 router.put('/:id/edit', projectsController.actualizar);
 
 router.post('/new', projectsController.crear);

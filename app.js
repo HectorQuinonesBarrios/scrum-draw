@@ -10,6 +10,7 @@ const express = require('express')
 , Usuario = require('./models/usuario')
 , log4js = require('log4js')
 , logger = log4js.getLogger()
+
 , index = require('./routes/index')
 , users = require('./routes/usuarios')
 , login = require('./routes/login')
@@ -45,7 +46,7 @@ app.use(passport.initialize());
 app.use((req, res, next)=>{
   req.io = io;
   res.io = io;
-  
+
   next();
 });
 passport.serializeUser(function (user, done) {
