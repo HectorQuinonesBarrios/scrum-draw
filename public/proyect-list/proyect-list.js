@@ -3,7 +3,7 @@ riot.tag2('proyect-list', '<ul class="event-list"> <li each="{proyecto, i in pro
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment
     let self = this
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://scrum-draw.herokuapp.com');
     let xhttp = new XMLHttpRequest();
     this.socket.on('nuevo', (proyecto)=>{
       xhttp.onreadystatechange = function() {

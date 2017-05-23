@@ -3,7 +3,7 @@ riot.tag2('tarjeta-selector', '<div class="row" id="sortableKanbanBoards"> <div 
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
     let self = this
-    this.socket = io('http://localhost:3000')
+    this.socket = io('https://scrum-draw.herokuapp.com')
     let xhttp = new XMLHttpRequest()
     this.socket.on('backlogs', (backlog)=>{
       console.log('conectado');
