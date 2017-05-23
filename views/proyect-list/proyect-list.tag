@@ -13,7 +13,8 @@ proyect-list
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-
+        form(name='borrar', id='form-borrar-proyecto',  action='/projects/{proyecto._id}/borrar?_method=DELETE', method='POST')
+          button.btn.btn-danger.btn-ls(type='submit' style='float:right') x
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment
@@ -23,7 +24,7 @@ proyect-list
     this.socket.on('nuevo', (proyecto)=>{
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           console.log(xhttp.responseText); 
+           console.log(xhttp.responseText);
            self.update({proyectos:JSON.parse(xhttp.responseText)});
         }
       };

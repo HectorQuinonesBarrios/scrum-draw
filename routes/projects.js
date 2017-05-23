@@ -15,6 +15,8 @@ router.put('/:id/edit', projectsController.actualizar);
 
 router.post('/new', projectsController.crear);
 
+router.delete('/:id/borrar', projectsController.borrar);
+
 router.use('/new', projectsController.blank);
 
 module.exports = router;

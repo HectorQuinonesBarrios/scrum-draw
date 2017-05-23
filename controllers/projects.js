@@ -158,6 +158,20 @@ function list(req, res, next) {
     }
   });
 }
+
+function borrar(req,res,next){
+  logger.info(req.params.id);
+  Proyecto.remove({_id: req.params.id},(err, object)=>{
+    if(err){
+      throw err;
+    }else {
+      res.io.emit('nuevo', object);
+      res.sendStatus(200);
+    }
+
+  });
+}
+
 function socket(req, res, next){
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if (!usuario) {
@@ -190,5 +204,6 @@ module.exports = exports = {
   crear,
   editar,
   actualizar,
-  socket
+  socket,
+  borrar
 }

@@ -76,7 +76,8 @@ Tarjeta.update({_id: req.body.id}, {$set: tarjeta}, (err,tarjeta)=>{
 
 function borrar(req,res,next){
   logger.debug('Borrar Tarjeta');
-  Tarjeta.remove({_id: req.body.id}, (err, tarjeta)=>{
+  logger.info(req.params.id);
+  Tarjeta.remove({_id: req.params.id}, (err, tarjeta)=>{
     if(err){
       throw err;
     }else {
