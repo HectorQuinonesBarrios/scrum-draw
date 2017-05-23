@@ -6,7 +6,8 @@
     "start": "node bin/www",
     "start2": "run-p riot-compile server",
     "server": "supervisor ./bin/www",
-    "riot-compile": "riot -w --template pug views public"
+    "riot-compile": "riot -w --template pug views public",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
