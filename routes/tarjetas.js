@@ -3,6 +3,9 @@ const express = require('express'),
       tarjetasController = require('../controllers/tarjetas');
 
 router.post('/', tarjetasController.crear);
+
+router.put('/', tarjetasController.actualizar);
+
 router.delete('/', tarjetasController.borrar);
 
 module.exports = router;

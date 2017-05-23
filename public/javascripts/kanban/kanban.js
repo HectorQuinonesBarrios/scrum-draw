@@ -30,18 +30,17 @@ function draggableInit() {
         var targetId = children.attr('id');
 
         if (sourceId != targetId) {
-            var elementId = event.originalEvent.dataTransfer.getData("text/plain");
+            let elementId = event.originalEvent.dataTransfer.getData("text/plain");
 
             $('#processing-modal').modal('toggle'); //before post
 
-
-            // Post data
-            setTimeout(function () {
-                var element = document.getElementById(elementId);
+            $.post('/tarjetas?_method=PUT', {id: elementId, backlog_id: targetId}, function(data) {
+              console.log(data);
+              let element = document.getElementById(elementId);
                 children.prepend(element);
-                $('#processing-modal').modal('toggle'); // after post
-            }, 1000);
-
+            }).always(function() {
+              $('#processing-modal').modal('toggle');
+            });
         }
 
         event.preventDefault();

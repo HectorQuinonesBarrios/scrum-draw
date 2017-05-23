@@ -5,7 +5,7 @@ tarjeta-selector
           i.fa.fa-2x.fa-plus-circle.pull-right
         div.panel-body
           div.kanban-centered(id='{ backlog._id }')
-              article#item6.kanban-entry.grab(draggable='true' each='{ tarjeta, i in backlog.tarjetas }')
+            article.kanban-entry.grab(draggable='true' each='{ tarjeta, i in backlog.tarjetas }' id='{ tarjeta._id }')
                 div.kanban-entry-inner
                   div.kanban-label
                     h2 Tarea con valor de { tarjeta.valor }

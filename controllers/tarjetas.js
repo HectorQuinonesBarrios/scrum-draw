@@ -53,26 +53,27 @@ function ver(req, res, next){
 
 function actualizar(req, res, next){
   logger.debug('Actualizar Tarjeta');
+  logger.debug(req.body);
   let tarjeta = {
-    valor: req.body.valor,
-  	narrativa: req.body.narrativa,
-  	criterios: req.body.criterios,
-  	validada: req.body.validada,
-  	terminado: req.body.terminado,
-  	asignados: [{usuario_id: req.body.asignados}],
+//    valor: req.body.valor,
+//  	narrativa: req.body.narrativa,
+//  	criterios: req.body.criterios,
+//  	validada: req.body.validada,
+//  	terminado: req.body.terminado,
+//  	asignados: [{usuario_id: req.body.asignados}],
     backlog: req.body.backlog_id
   };
 
-Tarjeta.update({_id:req.params.id}, {$set: tarjeta}, (err,tarjeta)=>{
-
+Tarjeta.update({_id: req.body.id}, {$set: tarjeta}, (err,tarjeta)=>{
     if(err){
       throw err;
     }else {
-      next();
+      res.io.emit('backlogs', tarjeta);
+      res.status(200).send('ok');
     }
   });
-
 }
+
 function borrar(req,res,next){
   logger.debug('Borrar Tarjeta');
   Tarjeta.remove({_id: req.body.id}, (err, tarjeta)=>{
