@@ -15,7 +15,7 @@ router.put('/:id/edit', projectsController.actualizar);
 
 router.post('/new', projectsController.crear);
 
-router.delete('/:id/borrar', projectsController.borrar);
+router.delete('/:id', projectsController.borrar);
 
 router.use('/new', projectsController.blank);
 

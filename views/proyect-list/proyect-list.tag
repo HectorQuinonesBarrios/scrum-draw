@@ -13,13 +13,13 @@ proyect-list
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-        form(name='borrar', id='form-borrar-proyecto',  action='/projects/{proyecto._id}/borrar?_method=DELETE', method='POST')
-          button.btn.btn-danger.btn-ls(type='submit' style='float:right') x
+        button.btn.btn-danger.btn-ls(type='submit' style='float:right;' onclick="borrar('{proyecto._id}');") x
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment
     let self = this
-    this.socket = io('https://scrum-draw.herokuapp.com');
+    //this.socket = io('https://scrum-draw.herokuapp.com');
+    this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();
     this.socket.on('nuevo', (proyecto)=>{
       xhttp.onreadystatechange = function() {
@@ -31,3 +31,9 @@ proyect-list
       xhttp.open("GET", "/projects/socket", true);
       xhttp.send();
     });
+  
+    
+
+      
+    
+    
