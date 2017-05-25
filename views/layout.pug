@@ -24,14 +24,14 @@ html
             a.navbar-brand(href='/') Scrum
           #navbar.collapse.navbar-collapse
             ul.nav.navbar-nav
-              li.active
+              li
                 a(href='/') Home
               li
                 a(href='/projects') Proyectos
             ul.nav.navbar-nav.navbar-right
               if !usuario || !usuario._id
-                a.btn.btn-success.navbar-btn(href='/login') Iniciar sesión
-                a.btn.btn-danger.navbar-btn(href='/users') Regístrate
+                a.btn.btn-primary.navbar-btn(href='/login') Iniciar sesión
+                a.btn.btn-success.navbar-btn(href='/users') Regístrate
               else
                 li.dropdown
                   a.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')

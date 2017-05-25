@@ -14,7 +14,7 @@ proyect-list
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-        a.button(onclick="{ borrar }") Borrar
+        a.button(onclick="{ borrar }" href='#') Borrar
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment

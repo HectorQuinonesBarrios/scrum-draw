@@ -32,7 +32,7 @@ tarjeta.save((err,object)=>{
   else{
     //TODO
     res.io.emit('backlogs', object);
-    res.redirect(`/kanban/${req.body.proyecto}`);
+    res.sendStatus(200);
   }
 
 });

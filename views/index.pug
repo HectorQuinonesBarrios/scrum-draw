@@ -1,8 +1,43 @@
 extends layout
-
+block append head
+  style(type="text/css").
+    hr {
+      color: #001400
+      height: 2px;
+      background-color:#555;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .jumbotron {
+      margin-top: 50px;
+      border-radius: 20px;
+    }
 block content
     if(usuario && usuario._id)
-        h1= usuario.local.nombre
+        
         p Bienvenido #{usuario.local.nombre}
+        .jumbotron
+          .container
+            h1= 'Bienvenido ' + usuario.local.nombre
+            p
+              | Te recomendamos checar tus proyectos
+          
+            hr.my-4
+            
+            p
+              a.btn.btn-primary.btn-lg(href='/projects') Ver proyectos
     else
-        h1 Bienvenido a SCRUM-DRAW
+      .jumbotron
+        .container
+          h1 Bienvenido a Scrum Draw
+          p
+            | En esta aplicacion podras manejar tu equipo de trabajo, tus propios proyectos
+            | y la forma en la que ordenas tus cosas, unete a este proyecto registrandote abajo o iniciando sesion en caso que ya tengas cuenta
+        
+          hr.my-4
+          
+          p
+            a.btn.btn-primary.btn-lg(href='/login') Inicia sesion
+            a.btn.btn-success.btn-lg(href='/users') Registrate !
+
+ 
