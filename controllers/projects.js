@@ -157,7 +157,7 @@ function list(req, res, next) {
               logger.debug(err);
               throw err;
           }
-            res.render('projects/list.pug', {proyectos, usuario, moment});
+            res.render('projects/list.pug', {proyectos, usuario});
         });
     }
   });
