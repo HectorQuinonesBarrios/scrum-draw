@@ -13,7 +13,7 @@ proyect-list
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-        button.btn.btn-danger.btn-ls(type='submit' style='float:right;' onclick="borrar('{proyecto._id}');") x
+        button.btn.btn-danger.btn-ls.button(type='submit' onclick="borrar('{proyecto._id}');") X
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment

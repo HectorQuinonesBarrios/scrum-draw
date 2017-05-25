@@ -621,8 +621,13 @@ img {
     cursor: -webkit-grabbing;
 }
 
+.panel-primary {
+  margin-top: 30px;
+}
+
 .panel-heading {
     cursor: context-menu;
+
 }
 
     .panel-heading i {
@@ -712,6 +717,26 @@ body {
     }
 
 
+
+/* BOTONES*/
+
+.buttonHolder{
+  margin:80px auto;
+  width:400px;
+}
+
+
+		.button{
+
+			border-radius: 50%;
+			height: 45px;
+      width: 45px;
+      margin: 0 30px 30px 0;
+      position: absolute;
+      right:    0;
+      bottom:   0;
+
+		}
 
 
 
