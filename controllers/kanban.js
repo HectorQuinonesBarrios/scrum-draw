@@ -11,6 +11,9 @@ const express = require('express'),
 function kanban(req, res, next) {
   logger.debug('KANBAN');
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
+    if(err){
+      res.redirect('/projects');
+    }
     if(!usuario) {
       res.redirect('/login');
     } else {
@@ -28,6 +31,7 @@ function kanban(req, res, next) {
       ], (error, proyecto) => {
         if (error) {
           logger.debug(error);
+          res.redirect('/projects');
         } else {
           proyecto = proyecto[0];
           Backlog.aggregate([
