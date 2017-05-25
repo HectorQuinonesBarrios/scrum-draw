@@ -2,7 +2,8 @@ tarjeta-selector
   div#sortableKanbanBoards.row
       div.panel.panel-primary.kanban-col(each='{ backlog, i in backlogs }')
         div.panel-heading { backlog.tipo }
-          i.fa.fa-2x.fa-plus-circle.pull-right
+          button.btn.btn-danger.btn-sm.buttonBacklog(type='submit' onclick="borrarBacklog('{backlog._id}');") X
+          i.fa.fa-2x.fa-plus-circle.pull-right      
         div.panel-body
           div.kanban-centered(id='{ backlog._id }')
             article.kanban-entry.grab(draggable='true' each='{ tarjeta, i in backlog.tarjetas }' id='{ tarjeta._id }')
@@ -15,6 +16,7 @@ tarjeta-selector
                     p Dado : { tarjeta.criterios.dado}
                     p Cuando : { tarjeta.criterios.cuando }
                     p Entonces : { tarjeta.criterios.entonces }
+                    button.btn.btn-danger.btn-ls.buttonTarjeta(type='submit' onclick="borrarTarjeta('{tarjeta._id}');") X
         div.panel-footer
           button.btn.btn-info.btn-sm(type='button' data-toggle='modal' data-target='#CardModal' data-backlog='{ backlog._id }') Agregar tarjeta
   div#processing-modal.modal.modal-static.fade(role='dialog' aria-hidden='true')

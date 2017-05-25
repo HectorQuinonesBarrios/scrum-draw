@@ -105,11 +105,12 @@ function actualizar(req,res,next){
 }
 function borrar(req,res,next){
   logger.debug('Borrar Backlog');
-  Backlog.remove({_id: req.body.backlog_id}, (err, backlog)=>{
+  Backlog.remove({_id: req.params.id}, (err, backlog)=>{
     if(err){
       throw err;
     }else {
-      next();
+      res.io.emit('backlogs', backlog);
+      res.sendStatus(200);
     }
   });
 }
