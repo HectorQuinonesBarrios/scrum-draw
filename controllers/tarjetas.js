@@ -18,11 +18,11 @@ function crear(req, res, next){
   		cuando: req.body.cuando,
   		entonces: req.body.entonces
   	},
-    backlog: req.body.backlog
+    backlog: req.body.backlog,
+    asignado: req.body.asignado
     /*,
   	validada: req.body.validada,
-  	terminado: req.body.terminado
-    ,asignados: [{usuario_id: req.body.asignados}]*/
+  	terminado: req.body.terminado*/
   });
 
   tarjeta.save((err, obj)=>{
@@ -62,7 +62,8 @@ function actualizar(req, res, next){
   		cuando: req.body.cuando,
   		entonces: req.body.entonces
   	},
-    backlog: req.body.backlog
+    backlog: req.body.backlog,
+    asignado: req.body.asignado
   } : {backlog: req.body.backlog};
 
   console.log(tarjeta);

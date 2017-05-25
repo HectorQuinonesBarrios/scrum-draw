@@ -1,25 +1,26 @@
 tarjeta-selector
   card-modal(ref='cardModal')
   div#sortableKanbanBoards.row
-      div.panel.panel-primary.kanban-col(each='{ backlog, i in backlogs }')
-        div.panel-heading(onclick='{ toggle }') { backlog.tipo }
-          i.fa.fa-2x.fa-plus-circle.pull-right      
-          button.btn.btn-danger.btn-sm.buttonBacklog.fa.fa-times(onclick="{ borrarBacklog }")
-        div.panel-body(ondragover='{ allowDrop }' ondrop='{ drop }')
-          div.kanban-centered(id='{ backlog._id }')
-            article.kanban-entry.grab(draggable='true' each='{ tarjeta, j in backlog.tarjetas }' id='{ tarjeta._id }' ondragstart='{ drag }')
-              div.kanban-entry-inner(onclick="{ openTarjeta }")
-                div.kanban-label
-                  h2 Tarea con valor de { tarjeta.valor }
-                  p Como : { tarjeta.narrativa.como }
-                  p Quiere : { tarjeta.narrativa.quiero }
-                  p De Manera Que : { tarjeta.narrativa.manera }
-                  p Dado : { tarjeta.criterios.dado}
-                  p Cuando : { tarjeta.criterios.cuando }
-                  p Entonces : { tarjeta.criterios.entonces }
-              button.btn.btn-danger.btn-ls.buttonTarjeta.fa.fa-times(onclick="{ borrarTarjeta }")
-        div.panel-footer
-          button.btn.btn-info.btn-sm(type='button' onclick='{ openTarjeta }') Agregar tarjeta
+    div.panel.panel-primary.kanban-col(each='{ backlog, i in backlogs }')
+      div.panel-heading(onclick='{ toggle }') { backlog.tipo }
+        i.fa.fa-2x.fa-plus-circle.pull-right
+        button.btn.btn-danger.btn-sm.buttonBacklog.fa.fa-times(onclick="{ borrarBacklog }")
+      div.panel-body(ondragover='{ allowDrop }' ondrop='{ drop }')
+        div.kanban-centered(id='{ backlog._id }')
+          article.kanban-entry.grab(draggable='true' each='{ tarjeta in backlog.tarjetas }' id='{ tarjeta._id }' ondragstart='{ drag }')
+            div.kanban-entry-inner(onclick="{ openTarjeta }")
+              div.kanban-label
+                h2 Tarea con valor de { tarjeta.valor }
+                p Como: { tarjeta.narrativa.como }
+                p Quiere: { tarjeta.narrativa.quiero }
+                p De manera que: { tarjeta.narrativa.manera }
+                p Dado: { tarjeta.criterios.dado }
+                p Cuando: { tarjeta.criterios.cuando }
+                p Entonces: { tarjeta.criterios.entonces }
+                strong { getNombre(tarjeta.asignado)  }
+            button.btn.btn-danger.btn-ls.buttonTarjeta.fa.fa-times(onclick="{ borrarTarjeta }")
+      div.panel-footer
+        button.btn.btn-info.btn-sm(type='button' onclick='{ openTarjeta }') Agregar tarjeta
   div#processing-modal.modal.modal-static.fade(role='dialog' aria-hidden='true')
     div.modal-dialog
       div.modal-content
@@ -48,8 +49,14 @@ tarjeta-selector
       xhttp.send()
     }
 
+    getNombre(asignado) {
+      return this.proyecto.equipo_desarrollo.find(u => {
+        return u._id == asignado
+      }).local.nombre
+    }
+
     openTarjeta(e) {
-      this.refs.cardModal.setOpts({tarjeta: e.item.tarjeta || {narrativa: {}, criterios: {}}, backlog: e.item.tarjeta? e.item.tarjeta.backlog : e.item.backlog._id})
+      this.refs.cardModal.setOpts({tarjeta: e.item.tarjeta || {narrativa: {}, criterios: {}}, backlog: e.item.tarjeta? e.item.tarjeta.backlog : e.item.backlog._id, users: this.proyecto.equipo_desarrollo})
       $('#CardModal').modal('show')
     }
 
@@ -112,18 +119,23 @@ card-modal
             h4.modal-title Agregar tarjeta
           .modal-body
             h5 Narrativa de la historia
+            label(for='como') Como
             input.form-control(name='como' required='required' type='text' placeholder='Como' value='{ tarjeta.narrativa.como }')
-            br
+            label(for='quiero') Quiero
             input.form-control(name='quiero' required='required' type='text' placeholder='Quiero' value='{ tarjeta.narrativa.quiero }')
-            br
+            label(for='manera') De tal manera
             input.form-control(name='manera' required='required' type='text' placeholder='De tal manera' value='{ tarjeta.narrativa.manera }')
-            br
+            label(for='dado') Dado
             h5 Criterios de aceptacion
             input.form-control(name='dado' required='required' type='text' placeholder='Dado' value='{ tarjeta.criterios.dado }')
-            br
+            label(for='cuando') Cuando
             input.form-control(name='cuando' required='required' type='text' placeholder='Cuando' value='{ tarjeta.criterios.cuando }')
-            br
+            label(for='entonces') Entonces
             input.form-control(name='entonces' required='required' type='text' placeholder='Entonces' value='{ tarjeta.criterios.entonces }')
+            label(for='asignado') Asignado
+            select.form-control(name='asignado')
+              option(value='') Elige una persona
+              option(each='{ user in opts.users }' value='{ user._id }' selected='{ user._id == tarjeta.asignado }') { user.local.nombre }
             |
             input(hidden name='backlog' type='text' required='required' value='{ backlog }')
             input(hidden name='_id' type='text' value='{ tarjeta._id }')
@@ -150,7 +162,7 @@ card-modal
 
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(xhttp.responseText)
+        //console.log(xhttp.responseText)
         $('#CardModal').modal('hide')
       }
     }

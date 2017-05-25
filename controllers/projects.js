@@ -201,9 +201,7 @@ function socket(req, res, next){
     }
   });
 }
-function mid(req, res, next){
-  res.io.emit('nuevo', null);
-}
+
 module.exports = exports = {
   list,
   blank,

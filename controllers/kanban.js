@@ -4,6 +4,7 @@ const express = require('express'),
       Usuario = require('../models/usuario'),
       Tarjeta = require('../models/tarjeta'),
       Proyecto = require('../models/proyecto'),
+      ObjectId = require('mongoose').Types.ObjectId,
       log4js = require('log4js'),
       logger = log4js.getLogger();
 
@@ -13,11 +14,22 @@ function kanban(req, res, next) {
     if(!usuario) {
       res.redirect('/login');
     } else {
-      Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
-        if (err) {
+      Proyecto.aggregate([
+        {$match: {_id: ObjectId(req.params.id)}},
+        {$unwind: '$equipo_desarrollo'},
+        {$lookup: {from: 'usuarios', localField: 'scrum_master', foreignField: '_id', as: 'scrum_master_doc'}},
+        {$lookup: {from: 'usuarios', localField: 'product_owner', foreignField: '_id', as: 'product_owner_doc'}},
+        {$lookup: {from: 'usuarios', localField: 'equipo_desarrollo.usuario_id', foreignField: '_id', as: 'equipo_desarrollo_docs'}},
+        {$unwind: '$equipo_desarrollo_docs'},
+        {$unwind: '$scrum_master_doc'},
+        {$unwind: '$product_owner_doc'},
+        {$addFields: {'equipo_desarrollo_docs.rol': '$equipo_desarrollo.rol'}},
+        {$group: {_id: '$_id', nombre: {$first: '$nombre'}, fecha_solicitud: {$first: '$fecha_solicitud'}, fecha_arranque: {$first: '$fecha_arranque'}, descripcion: {$first: '$descripcion'}, scrum_master: {$first: '$scrum_master_doc'}, product_owner: {$first: '$product_owner_doc'}, equipo_desarrollo: {$push: '$equipo_desarrollo_docs'}}}
+      ], (error, proyecto) => {
+        if (error) {
           logger.debug(error);
         } else {
-          logger.debug(proyecto);
+          proyecto = proyecto[0];
           Backlog.aggregate([
             {$match: {'proyecto_id': proyecto._id}},
             {$lookup: {from: 'tarjetas', localField: '_id', foreignField: 'backlog', as: 'tarjetas'}}

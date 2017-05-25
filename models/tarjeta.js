@@ -21,7 +21,7 @@ const TarjetaSchema = Schema({
 	},
 	validada: Boolean,
 	terminado: Boolean,
-	//, asignados: [{usuario_id: ObjectId}]
+	asignado: ObjectId,
     backlog: {
       type: ObjectId,
       required: true
