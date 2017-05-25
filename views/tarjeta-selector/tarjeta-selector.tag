@@ -2,12 +2,12 @@ tarjeta-selector
   card-modal(ref='cardModal')
   div#sortableKanbanBoards.row
       div.panel.panel-primary.kanban-col(each='{ backlog, i in backlogs }')
-        div.panel-heading { backlog.tipo }
+        div.panel-heading(onclick='{ toggle }') { backlog.tipo }
           i.fa.fa-2x.fa-plus-circle.pull-right      
           button.btn.btn-danger.btn-sm.buttonBacklog.fa.fa-times(onclick="{ borrarBacklog }")
-        div.panel-body
+        div.panel-body(ondragover='{ allowDrop }' ondrop='{ drop }')
           div.kanban-centered(id='{ backlog._id }')
-            article.kanban-entry.grab(draggable='{ true }' each='{ tarjeta, j in backlog.tarjetas }' id='{ tarjeta._id }')
+            article.kanban-entry.grab(draggable='true' each='{ tarjeta, j in backlog.tarjetas }' id='{ tarjeta._id }' ondragstart='{ drag }')
               div.kanban-entry-inner(onclick="{ openTarjeta }")
                 div.kanban-label
                   h2 Tarea con valor de { tarjeta.valor }
@@ -26,13 +26,14 @@ tarjeta-selector
         div.modal-body
           div.text-center
             i.fa.fa-refresh.fa-5x.fa-spin
-            h4 Processing...
+            h4 Procesando...
   script.
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
-    let self = this
-    //this.socket = io('https://scrum-draw.herokuapp.com')
     this.socket = io('http://localhost:3000')
+    //this.socket = io('https://scrum-draw.herokuapp.com')
+    let sourceId;
+    let self = this
     let xhttp = new XMLHttpRequest()
 
     borrarBacklog(e) {
@@ -52,6 +53,37 @@ tarjeta-selector
       $('#CardModal').modal('show')
     }
 
+    toggle(e) {
+      $(e.target.parentElement.nextElementSibling)
+      .slideToggle()
+    }
+
+    drag(e) {
+      sourceId = e.item.tarjeta.backlog;
+      e.dataTransfer.setData('text', e.target.id);
+    }
+
+    allowDrop(e) {
+      e.preventDefault()
+    }
+
+    drop(e) {
+      let targetId = e.item.backlog._id
+      if (sourceId != targetId) {
+        let elementId = e.dataTransfer.getData('text')
+        $('#processing-modal').modal('toggle')
+        $.post('/tarjetas?_method=PUT', {
+          _id: elementId, backlog: targetId
+        }, data=> {
+          let element = document.getElementById(elementId)
+          $(targetId).children().prepend(element)
+        }).always(()=>{
+          $('#processing-modal').modal('toggle')
+        })
+      }
+      e.preventDefault()
+    }
+
     this.socket.on('backlogs', message=>{
       xhttp.open('GET', '/kanban/backlogs/' + this.proyecto._id, true)
       xhttp.send()
@@ -63,6 +95,12 @@ tarjeta-selector
         self.update({backlogs: JSON.parse(xhttp.responseText)})
       }
     }
+
+    let kanbanCol = $('.panel-body')
+    kanbanCol.css('max-height', (window.innerHeight - 150) + 'px')
+
+    let kanbanColCount = parseInt(kanbanCol.length)
+    $('.container-fluid').css('min-width', (kanbanColCount * 350) + 'px')
 
 card-modal
   #CardModal.modal.fade(role='dialog')
@@ -100,7 +138,6 @@ card-modal
   script.
     this.tarjeta = opts.tarjeta || {narrativa: {}, criterios: {}}
     this.backlog = opts.backlog || this.tarjeta.backlog
-    let self = this
     let xhttp = new XMLHttpRequest()
 
     enviar(e) {

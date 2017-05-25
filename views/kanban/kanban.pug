@@ -14,8 +14,6 @@ block append script
   script(src='/riot/riot.min.js')
   script(src='/tarjeta-selector/tarjeta-selector.js')
   script(src='/kanban/backlog-modal.js')
-  //script(src='/kanban/card-modal.js')
-  script(src='/javascripts/kanban/kanban.js')
   script(src='/socket.io/socket.io.js')
   script.
     riot.mount('tarjeta-selector', {backlogs: !{JSON.stringify(backlogs)}, proyecto: !{JSON.stringify(proyecto)}})
