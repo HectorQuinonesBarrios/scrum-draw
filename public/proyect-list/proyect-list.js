@@ -5,11 +5,12 @@ riot.tag2('proyect-list', '<ul class="event-list"> <li each="{proyecto, i in pro
 
     this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();
+    let self = this
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
 
-           this.update({proyectos:JSON.parse(xhttp.responseText)});
+           self.update({proyectos:JSON.parse(xhttp.responseText)});
         }
     };
 
