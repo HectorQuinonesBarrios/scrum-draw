@@ -14,11 +14,4 @@ block content
   script(src='/moment/moment.js' type='text/javascript')
   script(src='/proyect-list/proyect-list.js' type='text/javascript')
   script.
-    riot.mount('proyect-list', {proyectos: !{JSON.stringify(proyectos)}, moment: moment});
-  script.
-    let xhttp = new XMLHttpRequest();
-    function borrar(id){
-    console.log('si hice algo');
-    xhttp.open("DELETE", "/projects/"+id, true);
-    xhttp.send();
-    }
+    riot.mount('proyect-list', {proyectos: !{JSON.stringify(proyectos)}, moment: moment})
