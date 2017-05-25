@@ -10,10 +10,11 @@ proyect-list
         p.desc Product Owner: {proyecto.product_owner.local.nombre}
         p.desc SCRUM Master: {proyecto.scrum_master.local.nombre}
         p.desc {proyecto.descripcion}
+        
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-        button.btn.btn-danger.btn-ls.button(onclick="{ borrar }") X
+        a.button(onclick="{ borrar }") Borrar
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment

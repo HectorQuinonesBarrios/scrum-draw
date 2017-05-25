@@ -211,22 +211,19 @@
     }
 
     .button {
-      border-radius: 50%;
-      height: 35px;
-      width: 35px;
-      margin: 10px 10px 10px 10px;
-      position: absolute;
-      right: 0;
-      bottom: 0;
+      float: right;
     }
 
     .buttonadd {
       border-radius: 50%;
       height: 45px;
       width: 45px;
-      margin: 0 30px 0 30px;
+      margin: 0 30px 30px 30px;
       padding: 10px;
-      position: absolute;
+      position: fixed;
       right: 0;
       bottom: 0;
+    }
+    li {
+      margin-bottom: : 50px;
     }
