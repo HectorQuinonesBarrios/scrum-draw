@@ -2,8 +2,8 @@ proyect-list
   ul.event-list
     li(each='{proyecto, i in proyectos}')
       time
-        p  Fecha de solicitud {moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")}
-        p  Fecha de arranque {moment(proyecto.fecha_arranque).format("DD-MM-YYYY")}
+        p Fecha de solicitud: {moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")}
+        p Fecha de arranque: {moment(proyecto.fecha_arranque).format("DD-MM-YYYY")}
       .info
         h2.title
           a(href='/kanban/{proyecto._id}') {proyecto.nombre}
@@ -17,7 +17,6 @@ proyect-list
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment
-    let self = this
     //this.socket = io('https://scrum-draw.herokuapp.com');
     this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();
@@ -25,7 +24,7 @@ proyect-list
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            //console.log(xhttp.responseText);
-           self.update({proyectos:JSON.parse(xhttp.responseText)});
+           this.update({proyectos:JSON.parse(xhttp.responseText)});
         }
     };
 

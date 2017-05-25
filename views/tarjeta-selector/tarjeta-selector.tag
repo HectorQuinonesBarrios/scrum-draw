@@ -29,19 +29,18 @@ tarjeta-selector
   script.
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
-    let self = this
     //this.socket = io('https://scrum-draw.herokuapp.com');
     this.socket = io('http://localhost:3000');
-    
     let xhttp = new XMLHttpRequest()
-    this.socket.on('backlogs', (backlog)=>{
-      console.log('conectado');
-      xhttp.onreadystatechange = function() {
+
+    xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            console.log(xhttp.responseText);
-           self.update({backlogs: JSON.parse(xhttp.responseText)});
+           this.update({backlogs: JSON.parse(xhttp.responseText)});
         }
-      };
+    };
+
+    this.socket.on('backlogs', backlog=>{
       xhttp.open('GET', '/kanban/backlogs/'+this.proyecto._id, true);
       xhttp.send();
     });

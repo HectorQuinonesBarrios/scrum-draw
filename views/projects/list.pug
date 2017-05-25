@@ -3,14 +3,15 @@ block append head
   link(rel='stylesheet', href='/stylesheets/projects.list.css')
 block content
   .container.body
+    a.btn.btn-success.btn-large.buttonadd(href="/projects/new")
+      span.glyphicon.glyphicon-plus
     .row
       .col-xs-12.col-sm-offset-2.col-sm-8(class='[ ]')
         proyect-list
-        a.btn.btn-success.btn-large.glyphicon.glyphicon-plus.buttonadd(href="/projects/new")
-        
-        
+
   script(src='/riot/riot.min.js' type='text/javascript')
   script(src='/socket.io/socket.io.js' type='text/javascript')
+  script(src='/moment/moment.js' type='text/javascript')
   script(src='/proyect-list/proyect-list.js' type='text/javascript')
   script.
     riot.mount('proyect-list', {proyectos: !{JSON.stringify(proyectos)}, moment: moment})
