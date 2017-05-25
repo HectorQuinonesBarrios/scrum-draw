@@ -20,11 +20,12 @@ proyect-list
     //this.socket = io('https://scrum-draw.herokuapp.com');
     this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();
+    let self = this
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            //console.log(xhttp.responseText);
-           this.update({proyectos:JSON.parse(xhttp.responseText)});
+           self.update({proyectos:JSON.parse(xhttp.responseText)});
         }
     };
 

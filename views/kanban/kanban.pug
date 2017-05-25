@@ -23,14 +23,3 @@ block append script
         let backlogId = button.data('backlog');
         $(this).find('.modal-body input[name=backlog]').val(backlogId);
     });
-    let xhttp = new XMLHttpRequest();
-    function borrarBacklog(id){
-    console.log('si hice algo');
-    xhttp.open("DELETE", "/kanban/"+id, true);
-    xhttp.send();
-    }
-    function borrarTarjeta(id){
-    console.log('si hice algo');
-    xhttp.open("DELETE", "/tarjetas/"+id, true);
-    xhttp.send();
-    }
