@@ -6,7 +6,7 @@ const logger = log4js.getLogger();
 
 function crear(req, res, next){
   logger.debug('Crear Tarjeta');
-  let tarjeta = new Tarjeta ({
+  let tarjeta = new Tarjeta({
     valor: req.body.valor,
     narrativa: {
   		como: req.body.como,
@@ -25,18 +25,15 @@ function crear(req, res, next){
     ,asignados: [{usuario_id: req.body.asignados}]*/
   });
 
-tarjeta.save((err,object)=>{
-  if(err){
-    res.redirect(`/kanban/${req.body.proyecto}`);
-  }
-  else{
-    //TODO
-    res.io.emit('backlogs', object);
-    res.sendStatus(200);
-  }
-
-});
-
+  tarjeta.save((err, obj)=>{
+    if(err){
+      logger.info(err);
+      res.status(500).send(err);
+    } else {
+      res.io.emit('backlogs', obj);
+      res.status(200).send('ok');
+    }
+  });
 }
 
 function ver(req, res, next){
@@ -53,19 +50,26 @@ function ver(req, res, next){
 
 function actualizar(req, res, next){
   logger.debug('Actualizar Tarjeta');
-  logger.debug(req.body);
-  let tarjeta = {
-//    valor: req.body.valor,
-//  	narrativa: req.body.narrativa,
-//  	criterios: req.body.criterios,
-//  	validada: req.body.validada,
-//  	terminado: req.body.terminado,
-//  	asignados: [{usuario_id: req.body.asignados}],
-    backlog: req.body.backlog_id
-  };
+  let tarjeta = req.body.valor? {
+    valor: req.body.valor,
+    narrativa: {
+  		como: req.body.como,
+  		quiero: req.body.quiero,
+  		manera: req.body.manera
+  	},
+  	criterios: {
+  		dado: req.body.dado,
+  		cuando: req.body.cuando,
+  		entonces: req.body.entonces
+  	},
+    backlog: req.body.backlog
+  } : {backlog: req.body.backlog};
 
-Tarjeta.update({_id: req.body.id}, {$set: tarjeta}, (err,tarjeta)=>{
+  console.log(tarjeta);
+
+  Tarjeta.update({_id: req.body._id}, {$set: tarjeta}, (err, tarjeta)=>{
     if(err){
+      console.log(err);
       throw err;
     }else {
       res.io.emit('backlogs', tarjeta);

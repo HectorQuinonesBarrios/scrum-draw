@@ -3,7 +3,7 @@ const express = require('express'),
       Proyecto = require('../models/proyecto'),
       Usuario = require('../models/usuario'),
       Backlog = require('../models/backlog'),
-      moment = require('moment'),
+      moment = require('moment/min/moment.min'),
       log4js = require('log4js'),
       logger = log4js.getLogger();
 
@@ -25,7 +25,7 @@ const aggregatePipeline = usuario => {
 function blank(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if (!usuario) {
-        res.render('login/login_form');
+        res.redirect('/login');
     } else {
       Usuario.find({}, {'local.nombre': 1, 'local.email': 1}, (err, usuarios) => {
         usuarios = usuarios || {};
@@ -47,7 +47,7 @@ function blank(req, res, next) {
 function actualizar(req, res, next) {
     Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
         if (!usuario) {
-            res.render('login/login_form');
+            res.redirect('/login');
         } else {
             let code,
                 message;
@@ -83,7 +83,7 @@ function actualizar(req, res, next) {
 function editar(req, res, next) {
     Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
         if (!usuario) {
-            res.render('login/login_form');
+            res.redirect('/login');
         } else {
             Usuario.find({}, {'local.nombre': 1, 'local.email': 1}, (err, usuarios) => {
                 usuarios = usuarios || [];
@@ -150,7 +150,7 @@ function crear(req, res, next) {
 function list(req, res, next) {
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if (!usuario) {
-        res.render('login/login_form');
+        res.redirect('/login');
     } else {
         Proyecto.aggregate(aggregatePipeline(usuario), (err, proyectos) => {
           if (err) {
@@ -168,7 +168,7 @@ function borrar(req, res, next) {
         _id: req.session.usuario
     }, (err, usuario) => {
         if (!usuario) {
-            res.render('login/login_form');
+            res.redirect('/login');
         } else {
             logger.info(req.params.id);
             Proyecto.remove({
@@ -189,7 +189,7 @@ function borrar(req, res, next) {
 function socket(req, res, next){
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if (!usuario) {
-        res.render('login/login_form');
+        res.redirect('/login');
     } else {
         Proyecto.aggregate(aggregatePipeline(usuario), (err, proyectos) => {
           if (err) {

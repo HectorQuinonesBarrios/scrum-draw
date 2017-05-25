@@ -4,9 +4,8 @@ block append head
   link(rel='stylesheet' href='/stylesheets/kanban.css')
 
 block content
-  // Modals
-  include new-backlog.pug
-  include new-card.pug
+  // Modal
+  backlog-modal
   .container-fluid
   button.btn-info.button(data-toggle='modal' data-target='#BacklogModal')
     i.fa.fa-plus
@@ -14,12 +13,10 @@ block content
 block append script
   script(src='/riot/riot.min.js')
   script(src='/tarjeta-selector/tarjeta-selector.js')
+  script(src='/kanban/backlog-modal.js')
+  //script(src='/kanban/card-modal.js')
   script(src='/javascripts/kanban/kanban.js')
   script(src='/socket.io/socket.io.js')
   script.
-    riot.mount('tarjeta-selector', {backlogs: !{JSON.stringify(backlogs)}, proyecto: !{JSON.stringify(proyecto)}});
-    $('#CardModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
-        let backlogId = button.data('backlog');
-        $(this).find('.modal-body input[name=backlog]').val(backlogId);
-    });
+    riot.mount('tarjeta-selector', {backlogs: !{JSON.stringify(backlogs)}, proyecto: !{JSON.stringify(proyecto)}})
+    riot.mount('backlog-modal', {proyecto: !{JSON.stringify(proyecto)}})

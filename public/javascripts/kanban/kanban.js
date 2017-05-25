@@ -14,27 +14,27 @@ $(function () {
 });
 
 function draggableInit() {
-    var sourceId;
+    let sourceId;
 
-    $('[draggable=true]').bind('dragstart', function (event) {
+    $('[draggable=true]').bind('dragstart', function (ev) {
         sourceId = $(this).parent().attr('id');
-        event.originalEvent.dataTransfer.setData("text/plain", event.target.getAttribute('id'));
+        ev.originalEvent.dataTransfer.setData("text", ev.target.id);
     });
 
-    $('.panel-body').bind('dragover', function (event) {
-        event.preventDefault();
+    $('.panel-body').bind('dragover', function (ev) {
+        ev.preventDefault();
     });
 
-    $('.panel-body').bind('drop', function (event) {
+    $('.panel-body').bind('drop', function (ev) {
         var children = $(this).children();
         var targetId = children.attr('id');
 
         if (sourceId != targetId) {
-            let elementId = event.originalEvent.dataTransfer.getData("text/plain");
+            let elementId = ev.originalEvent.dataTransfer.getData("text");
 
             $('#processing-modal').modal('toggle'); //before post
 
-            $.post('/tarjetas?_method=PUT', {id: elementId, backlog_id: targetId}, function(data) {
+            $.post('/tarjetas?_method=PUT', {_id: elementId, backlog: targetId}, function(data) {
               console.log(data);
               let element = document.getElementById(elementId);
                 children.prepend(element);
@@ -43,6 +43,6 @@ function draggableInit() {
             });
         }
 
-        event.preventDefault();
+        ev.preventDefault();
     });
 }

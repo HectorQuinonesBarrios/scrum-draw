@@ -17,7 +17,6 @@ proyect-list
         a.button(onclick="{ borrar }" href='#') Borrar
   script.
     this.proyectos = opts.proyectos || []
-    this.moment = opts.moment
     //this.socket = io('https://scrum-draw.herokuapp.com');
     this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();

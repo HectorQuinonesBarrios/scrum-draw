@@ -41,5 +41,6 @@
 script(src='/riot/riot.min.js')
 script(src='/list-selector/list-selector.js')
 script(src='/socket.io/socket.io.js')
+script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous")
 script.
     riot.mount('list-selector', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol'], items: !{JSON.stringify(proyecto.equipo_desarrollo) || []}})

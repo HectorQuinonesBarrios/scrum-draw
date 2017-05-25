@@ -5,8 +5,14 @@ const mongoose = require('mongoose'),
 	  ObjectId = Schema.ObjectId;
 
 const BacklogSchema = Schema({
-	tipo: String,
-	proyecto_id: ObjectId
+	tipo: {
+      type: String,
+      required: true
+    },
+	proyecto_id: {
+      type: ObjectId,
+      required: true
+    }
 });
 
 module.exports = exports = mongoose.model('Backlog', BacklogSchema);

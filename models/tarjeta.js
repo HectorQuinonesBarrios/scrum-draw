@@ -5,7 +5,10 @@ const Schema = mongoose.Schema,
 	  ObjectId = Schema.ObjectId;
 
 const TarjetaSchema = Schema({
-	valor: Number,
+	valor: {
+      type: Number,
+      required: true
+    },
 	narrativa: {
 		como: String,
 		quiero: String,
@@ -19,7 +22,10 @@ const TarjetaSchema = Schema({
 	validada: Boolean,
 	terminado: Boolean,
 	//, asignados: [{usuario_id: ObjectId}]
-    backlog: ObjectId
+    backlog: {
+      type: ObjectId,
+      required: true
+    }
 });
 
 module.exports = exports = mongoose.model('Tarjeta', TarjetaSchema);

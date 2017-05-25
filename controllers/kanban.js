@@ -8,9 +8,10 @@ const express = require('express'),
       logger = log4js.getLogger();
 
 function kanban(req, res, next) {
+  logger.debug('KANBAN');
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if(!usuario) {
-      res.render('login/login_form');
+      res.redirect('/login');
     } else {
       Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
         if (err) {
@@ -35,9 +36,10 @@ function kanban(req, res, next) {
 }
 
 function backlogs(req, res, next) {
+  logger.debug('BACKLOGS');
   Usuario.findOne({_id: req.session.usuario}, (err, usuario) => {
     if(!usuario) {
-      res.render('login/login_form');
+      res.redirect('/login');
     } else {
       Proyecto.findOne({_id: req.params.id}, (error, proyecto) => {
         if (err) {
@@ -72,19 +74,18 @@ function crear(req, res, next){
       throw err;
     }else {
       res.io.emit('backlogs', object);
-      next();
+      res.status(200).send('ok');
     }
   });
 }
 
 function ver(req, res, next){
   logger.debug('Ver Backlog');
-  Backlog.findOne({_id:req.params.id}, (err, backlog)=>{
+  Backlog.findOne({_id: req.params.id}, (err, backlog)=>{
     if(err){
       res.status(404);
     }else {
       res.status(200).json(backlog);
-      next();
     }
   });
 }
