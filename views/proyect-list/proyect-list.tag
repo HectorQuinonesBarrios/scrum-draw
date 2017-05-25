@@ -2,8 +2,8 @@ proyect-list
   ul.event-list
     li(each='{proyecto, i in proyectos}')
       time
-        p  Fecha de solicitud {moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")}
-        p  Fecha de arranque {moment(proyecto.fecha_arranque).format("DD-MM-YYYY")}
+        p Fecha de solicitud: {moment(proyecto.fecha_solicitud).format("DD-MM-YYYY")}
+        p Fecha de arranque: {moment(proyecto.fecha_arranque).format("DD-MM-YYYY")}
       .info
         h2.title
           a(href='/kanban/{proyecto._id}') {proyecto.nombre}
