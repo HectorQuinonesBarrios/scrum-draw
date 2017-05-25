@@ -30,11 +30,11 @@
 		.col-sm-6.form-group
 			label Email
 			|
-			input.form-control(value=`${usuario.local.email}` required='required' name='email' type='email' placeholder='Escriba el Email..')
+			input.form-control(value=`${usuario.local.email}` required='required' name='email' type='email' pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"  placeholder='Escriba el Email..')
 		.col-sm-6.form-group
-			label Contraseña
+			label Contraseña (Minimo 8 caracteres maximo 16)
 			|
-			input.form-control(required='required' name='password' type='password' placeholder='Escriba la contraseña..')
+			input.form-control(required='required' name='password'  type='password' pattern="[A-Za-z0-9]{8,16}" placeholder='Escriba la contraseña..')
 	button.btn.btn-lg.btn-info(type='submit') Aceptar
 
 script(src='/riot/riot.min.js')
