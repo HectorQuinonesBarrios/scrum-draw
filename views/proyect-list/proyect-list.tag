@@ -13,7 +13,7 @@ proyect-list
         a(href='/statistics/{proyecto._id}') Ver estadísticas
         | -
         a(href='/projects/{proyecto._id}/edit') Editar
-        button.btn.btn-danger.btn-ls.button(type='submit' onclick="borrar('{proyecto._id}');") X
+        button.btn.btn-danger.btn-ls.button(onclick="{ borrar }") X
   script.
     this.proyectos = opts.proyectos || []
     this.moment = opts.moment
@@ -21,18 +21,24 @@ proyect-list
     //this.socket = io('https://scrum-draw.herokuapp.com');
     this.socket = io('http://localhost:3000');
     let xhttp = new XMLHttpRequest();
-    this.socket.on('nuevo', (proyecto)=>{
-      xhttp.onreadystatechange = function() {
+
+    xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           console.log(xhttp.responseText);
+           //console.log(xhttp.responseText);
            self.update({proyectos:JSON.parse(xhttp.responseText)});
         }
-      };
+    };
+
+    borrar(e) {
+        e.preventDefault()
+        xhttp.open("DELETE", "/projects/"+e.item.proyecto._id, true);
+        xhttp.send();
+    }
+
+    this.socket.on('nuevo', proyecto=>{
       xhttp.open("GET", "/projects/socket", true);
       xhttp.send();
     });
-  
-    
 
       
     
