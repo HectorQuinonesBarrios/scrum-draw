@@ -31,8 +31,8 @@ tarjeta-selector
   script.
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
-    this.socket = io('http://localhost:3000')
-    //this.socket = io('https://scrum-draw.herokuapp.com')
+    //this.socket = io('http://localhost:3000')
+    this.socket = io('https://scrum-draw.herokuapp.com')
     let sourceId;
     let self = this
     let xhttp = new XMLHttpRequest()
