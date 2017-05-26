@@ -2,8 +2,8 @@
 riot.tag2('tarjeta-selector', '<card-modal ref="cardModal"></card-modal> <div class="row" id="sortableKanbanBoards"> <div class="panel panel-primary kanban-col" each="{backlog, i in backlogs}"> <div class="panel-heading" onclick="{toggle}">{backlog.tipo}<i class="fa fa-2x fa-plus-circle pull-right"></i> <button class="btn btn-danger btn-sm buttonBacklog fa fa-times" onclick="{borrarBacklog}"></button> </div> <div class="panel-body" ondragover="{allowDrop}" ondrop="{drop}"> <div class="kanban-centered" id="{backlog._id}"> <article class="kanban-entry grab" draggable="true" each="{tarjeta in backlog.tarjetas}" id="{tarjeta._id}" ondragstart="{drag}"> <div class="kanban-entry-inner" onclick="{openTarjeta}"> <div class="kanban-label"> <h2>Tarea con valor de {tarjeta.valor}</h2> <p>Como: {tarjeta.narrativa.como}</p> <p>Quiere: {tarjeta.narrativa.quiero}</p> <p>De manera que: {tarjeta.narrativa.manera}</p> <p>Dado: {tarjeta.criterios.dado}</p> <p>Cuando: {tarjeta.criterios.cuando}</p> <p>Entonces: {tarjeta.criterios.entonces}</p><strong>{getNombre(tarjeta.asignado)}</strong> </div> </div> <button class="btn btn-danger btn-ls buttonTarjeta fa fa-times" onclick="{borrarTarjeta}"></button> </article> </div> </div> <div class="panel-footer"> <button class="btn btn-info btn-sm" type="button" onclick="{openTarjeta}">Agregar tarjeta</button> </div> </div> </div> <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-body"> <div class="text-center"><i class="fa fa-refresh fa-5x fa-spin"></i> <h4>Procesando...</h4> </div> </div> </div> </div> </div>', '', '', function(opts) {
     this.backlogs = opts.backlogs
     this.proyecto = opts.proyecto
-    this.socket = io('http://localhost:3000')
 
+    this.socket = io('https://scrum-draw.herokuapp.com')
     let sourceId;
     let self = this
     let xhttp = new XMLHttpRequest()

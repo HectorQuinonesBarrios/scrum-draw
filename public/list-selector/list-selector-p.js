@@ -6,7 +6,6 @@ riot.tag2('list-selector-p', '<ul> <li each="{item, i in items}">{options? (pers
     let userIds = []
     this.personas = []
     for(usr of this.items) {
-      console.log(usr)
       userIds.push(usr.usuario_id)
     }
 
