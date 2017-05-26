@@ -32,15 +32,15 @@
     .col-sm-6.form-group
       label Equipo de Desarrollo
       |
-      list-selector
+      list-selector-p
           yield(to='input')
               select.selectpicker.show-tick(data-live-search="true" ref='input')
                   each usuario in usuarios
-                      option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`${usuario._id}`)= usuario.local.nombre
+                      option(data-tokens=`${usuario.local.nombre} ${usuario.local.email}` value=`["${usuario._id}", "${usuario.local.nombre}"]`)= usuario.local.nombre
   button.btn.btn-lg.btn-info(type='submit') Aceptar
 script(src='/riot/riot.min.js')
-script(src='/list-selector/list-selector.js')
+script(src='/list-selector/list-selector-p.js')
 script(src='/socket.io/socket.io.js')
 script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous")
 script.
-    riot.mount('list-selector', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol'], items: !{JSON.stringify(proyecto.equipo_desarrollo) || []}})
+    riot.mount('list-selector-p', {name: 'equipo_desarrollo', buttonName: 'desarrollador', options: ['Programador', 'QA', 'Analista', 'Diseñador'], keys: ['usuario_id', 'rol'], items: !{JSON.stringify(proyecto.equipo_desarrollo) || []}, personas: !{JSON.stringify(usuarios)}})

@@ -14,8 +14,6 @@ block append head
     }
 block content
     if(usuario && usuario._id)
-        
-        p Bienvenido #{usuario.local.nombre}
         .jumbotron
           .container
             h1= 'Bienvenido ' + usuario.local.nombre

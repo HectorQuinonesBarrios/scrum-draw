@@ -1,4 +1,8 @@
 proyect-list
+  .jumbotron(if='{ !proyectos || proyectos.length < 1}')
+    .container
+      h1 Parece que no hay ningún proyecto aún!
+      p Presiona el botón flotante para crear un nuevo proyecto.
   ul.event-list
     li(each='{proyecto, i in proyectos}')
       time

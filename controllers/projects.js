@@ -61,7 +61,7 @@ function actualizar(req, res, next) {
                 product_owner: req.body.product_owner,
                 equipo_desarrollo: JSON.parse(req.body.equipo_desarrollo)
               }
-            }, (err, res) => {
+            }, (err, resu) => {
               if (err) {
                 code = 'danger';
                 message = 'No se ha podido editar el proyecto.';
@@ -74,7 +74,7 @@ function actualizar(req, res, next) {
                 code,
                 message
               };
-              next();
+              res.redirect('/projects');
             });
         }
     });
