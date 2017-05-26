@@ -16,7 +16,6 @@ Dentro de la carpeta raiz del proyecto, seguir los siguientes pasos:
   ````
 
 3. Instalar las dependencias de NPM
-
   ````
   npm install
   ````
@@ -30,8 +29,9 @@ Dentro de la carpeta raiz del proyecto, seguir los siguientes pasos:
 
 Para ejecutar el servidor dentro de la carpeta raiz del proyecto, seguir los siguientes pasos:
 ````
-npm start
+npm run start2
 ````
+El comando ``npm start`` se usa sólo cuando el servidor está en producción. 
 
 ## Contribuye
 
