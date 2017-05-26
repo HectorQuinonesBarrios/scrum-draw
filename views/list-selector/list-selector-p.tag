@@ -17,7 +17,6 @@ list-selector-p
         let userIds = []
         this.personas = []
         for(usr of this.items) {
-          console.log(usr)
           userIds.push(usr.usuario_id)
         }
         
@@ -27,13 +26,12 @@ list-selector-p
             this.update()
           }
         }
-        
+
         add(e) {
             e.preventDefault()
             let input = this.refs.input,
                 options = this.refs.options,
                 item = {}
-            console.log(input.value)
             this.persona= JSON.parse(input.value);
             this.personas.push(this.persona);
             if (opts.options) {

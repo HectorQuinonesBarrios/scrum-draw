@@ -22,7 +22,6 @@ riot.tag2('list-selector-p', '<ul> <li each="{item, i in items}">{options? (pers
         let input = this.refs.input,
             options = this.refs.options,
             item = {}
-        console.log(input.value)
         this.persona= JSON.parse(input.value);
         this.personas.push(this.persona);
         if (opts.options) {
